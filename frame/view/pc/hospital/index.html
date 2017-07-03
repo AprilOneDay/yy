@@ -1,0 +1,51 @@
+{include '/public/header'}
+         	<div class="n-right-about">
+         		<div class="yy">
+         			<div class="yuyue-title">
+      						<img src="/images/2017050601.jpg">
+         			</div>
+         			<div class="search">
+         				<input type="text" class="search-3" id="date-range0" name="time" placeholder="入住退房时间">
+         				<input type="submit" value="搜索" class="btn-search">
+         			</div>
+         			<div class="yy-list">
+						<table border="1" width="98%">
+							<tr style="text-align: center;background-color: #fcfcfc;line-height: 60px;">
+								<td width="270">房型</td>
+								<td width="110">面积</td>
+								<td width="100">床型</td>
+								<td>最多入住人数</td>
+								<td width="100">宽带</td>
+								<td>房价(含服务费)</td>
+								<td width="100">操作</td>
+							</tr>
+							{if $list}
+							{loop $list $key $value}
+							<tr style="text-align: center;height: 110px;">
+								<td class="title-pic"> 
+									<img src="{$value['thumb']}" width="110" height="80" class="left">
+									<p class="title left">{$value['title']}<span><a href=""> 查看详情 ▽</a></span></p>
+								</td>
+								<td>{$value['area']}m<sup>2</sup></td>
+								<td><?=substr($value['bed'],0,9)?></td>
+								<td>{$value['num']}人</td>
+								<td><span style="color:green">{$wifiCopy[$value['wifi']]}</span></td>
+								<td style="color: #ff9100;">¥{$value['price']}</td>
+								<td><a href="javascript:;" data-href="<?=url('order_index',array('catid'=>$catid,'id'=>$value['id']))?>" class="btn-yuding">预定</a></td>
+							</tr>
+							{/loop}
+							{/if}
+						</table>
+         			</div>
+         		</div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<!--end-->
+{include '/public/footer'}
+<link rel="stylesheet" href="/css/dsyy/daterangepicker.min.css">
+<script type="text/javascript" src="/js/dsyy/moment.min.js"></script>
+<script type="text/javascript" src="/js/dsyy/jquery.daterangepicker.min.js"></script>
+<script src="/js/dsyy/demo.js"></script>

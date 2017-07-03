@@ -1,0 +1,77 @@
+{include '/public/header'}
+            <div class="n-right-about">
+                <div class="yy">
+                    <div class="yuyue-title">
+                            <img src="/images/2017051401.jpg">
+                    </div>
+
+                    <div class="guahao">
+                        <div class="title">出诊信息</div>
+                        <table border="1" width="98%" >
+                            <tr>
+                                <td>科室</td>
+                                <td>时段</td>
+                                <?php foreach($week as $key => $value){ ?>
+                                <td><?=$value['zh']?><br/><?=$value['data']?></td>
+                                <?php } ?>
+                            </tr>
+                            {if $keshi}
+                            <?php  foreach ($keshi as $key => $value) {?>
+                            <tr>
+                                <td rowspan="3"><?=$value['keshi']?></td>
+                                <td>上午</td>
+                                {loop $week $key $value}
+                                <td>
+                                <?php $ysTime = table('ys_time')->where(array('time'=>$value['time'][0]))->field('ys_id')->find('one',true); ?>
+                                    {if $ysTime}
+                                        {loop $ysTime $k $v}
+                                        {$doctor[$v]['title']}<br/>
+                                        {/loop}
+                                    {else}
+                                    &nbsp;
+                                    {/if}
+                                {/loop}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>下午</td>
+                                {loop $week $key $value}
+                                <td>
+                                <?php $ysTime = table('ys_time')->where(array('time'=>$value['time'][1]))->field('ys_id')->find('one',true); ?>
+                                    {if $ysTime}
+                                        {loop $ysTime $k $v}
+                                        {$doctor[$v]['title']}<br/>
+                                        {/loop}
+                                    {else}
+                                    &nbsp;
+                                    {/if}
+                                {/loop}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>晚上</td>
+                                {loop $week $key $value}
+                                <td>
+                                <?php $ysTime = table('ys_time')->where(array('time'=>$value['time'][2]))->field('ys_id')->find('one',true); ?>
+                                    {if $ysTime}
+                                        {loop $ysTime $k $v}
+                                        {$doctor[$v]['title']}<br/>
+                                        {/loop}
+                                    {else}
+                                    &nbsp;
+                                    {/if}
+                                {/loop}
+                                </td>
+                            </tr>
+                            <?php } ?>
+                            {/if}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<!--end-->
+{include '/public/footer'}
