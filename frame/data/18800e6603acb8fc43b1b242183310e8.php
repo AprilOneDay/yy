@@ -93,6 +93,18 @@
                 <div class="clear"></div>
             </div>
             <div class="clear"></div>
+<script>
+function MM_over(mmObj) {
+    var mSubObj = mmObj.getElementsByTagName("div")[0];
+    mSubObj.style.display = "block";
+    mSubObj.style.backgroundColor = "#fff";
+}
+function MM_out(mmObj) {
+    var mSubObj = mmObj.getElementsByTagName("div")[0];
+    mSubObj.style.display = "none";
+    
+}
+</script>
             <div class="n-right-about">
                 <div class="yy">
                     <div class="yuyue-title">
@@ -119,7 +131,15 @@
                                 <?php $ysTime = table('ys_time')->where(array('time'=>$value['time'][0]))->field('ys_id')->find('one',true); ?>
                                     <?php if($ysTime){ ?>
                                         <?php foreach($ysTime as $k => $v){ ?>
-                                        <?php echo $doctor[$v]['title']; ?><br/>
+                                            <div class="link" onmouseover="MM_over(this)" onmouseout="MM_out(this)">
+                                                <a href="/index.php?m=content&c=index&a=show&catid=16&id=41" ><?php echo $doctor[$v]['title']; ?></a>
+                                                <div class="nr">
+                                                <a href="/index.php?m=content&c=index&a=show&catid=16&id=41"><img src="<?php echo $doctor[$v]['thumb']; ?>"></a>
+                                                <h2><a href="/index.php?m=content&c=index&a=show&catid=16&id=41"><?php echo $doctor[$v]['title']; ?></a></h2>
+                                                职　称：<span><?php echo $doctor[$v]['zc']; ?> </span><br>
+                                                专　长：<span><?php echo $doctor[$v]['like']; ?></span>
+                                                </div>
+                                            </div>
                                         <?php } ?>
                                     <?php }else{ ?>
                                     &nbsp;
