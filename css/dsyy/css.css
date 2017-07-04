@@ -324,6 +324,7 @@ footer{ background: #383838; margin-top: 20px;}
 .guahao table td{ line-height: 25px; height: 50px; }
 
 .link{position:relative;}
+.link .btn-guahao{display: block;line-height: 30px;}
 .nr{width:266px;height:135px;display:none;position:absolute;left:0;top:30px;z-index:10000;border:solid 1px #d9d9d9;padding:10px 10px 12px 10px;font-size: 12px;text-align:left;line-height: 22px!important;}
 .nr img{float: left; margin: 0 10px 0 0; width:99px; height:134px; line-height:20px; }
 .nr h2{ margin: 0;padding: 0;font-size: 12px;font-weight: normal;}
