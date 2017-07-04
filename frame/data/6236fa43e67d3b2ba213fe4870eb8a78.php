@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -75,16 +76,16 @@
                     <?php
                     $category = table('category')->where(array('parentid' => 7))->field('model,controller,action,catid,catname,arrchildid,url')->find('array');
                     ?>
-                    <?php foreach($category as $k => $r){ ?>
+                    <?php if($category){ foreach($category as $k => $r){ ?>
                     <li <?php if($r['catid'] == $catid){ ?>class="curr"<?php } ?> >
                         <a href="/frame/index.php?m=<?php echo $r['model']; ?>&c=<?php echo $r['controller']; ?>&a=<?php echo $r['action']; ?>&catid=<?php echo $r['catid']; ?>"><?php echo $r['catname']; ?><b>></b></a>
                     </li>
-                    <?php } ?>
+                    <?php }} ?>
                 </ul>
             </div>
             <div class="clear"></div>
         </div>
-        <div class="n-right left">
+	<div class="n-right left">
             <div class="n-right-top">
                 <div class="title left">预约病房</div>
                 <div class="location right">
@@ -113,8 +114,7 @@
 								<td>房价(含服务费)</td>
 								<td width="100">操作</td>
 							</tr>
-							<?php if($list){ ?>
-							<?php foreach($list as $key => $value){ ?>
+							<?php if($list){ foreach($list as $key => $value){ ?>
 							<tr style="text-align: center;height: 110px;">
 								<td class="title-pic"> 
 									<img src="<?php echo $value['thumb']; ?>" width="110" height="80" class="left">
@@ -127,8 +127,7 @@
 								<td style="color: #ff9100;">¥<?php echo $value['price']; ?></td>
 								<td><a href="javascript:;" data-href="<?=url('order_index',array('catid'=>$catid,'id'=>$value['id']))?>" class="btn-yuding">预定</a></td>
 							</tr>
-							<?php } ?>
-							<?php } ?>
+							<?php }} ?>
 						</table>
          			</div>
          		</div>
@@ -178,7 +177,9 @@
         </div>
     </div>
 </footer>
+</body>
 <link rel="stylesheet" href="/css/dsyy/daterangepicker.min.css">
 <script type="text/javascript" src="/js/dsyy/moment.min.js"></script>
 <script type="text/javascript" src="/js/dsyy/jquery.daterangepicker.min.js"></script>
 <script src="/js/dsyy/demo.js"></script>
+</html>

@@ -87,7 +87,7 @@
         </div>
     <div class="n-right left">
             <div class="n-right-top">
-                <div class="title left">预约病房</div>
+                <div class="title left">预约挂号</div>
                 <div class="location right">
                     您现在的位置：<a href="/">医院首页</a><span> > </span>
                 </div>
@@ -104,24 +104,20 @@
          			<span>预约确认与输入个人信息</span>
          			<table border="1" width="98%"  class="order-info">
          				<tr>
-         					<th>房型</th>
-         					<td><?php echo $data['title']; ?></td>
+         					<th>挂号科室</th>
+         					<td><?php echo $data['doctor']['keshi']; ?></td>
          				</tr>
          				<tr>
-         					<th>面积</th>
-         					<td><?php echo $data['area']; ?>m<sup>2</sup></td>
+         					<th>医生</th>
+         					<td><?php echo $data['doctor']['title']; ?></td>
          				</tr>
          				<tr>
-         					<th>楼层</th>
-         					<td><?php echo $data['floor']; ?>楼</td>
-         				</tr>
-         				<tr>
-         					<th>床型</th>
-         					<td><?php echo $data['bed']; ?></td>
+         					<th>就诊时间</th>
+         					<td><?php echo $data['time']; ?></td>
          				</tr>
          				<tr>
          					<th>费用</th>
-         					<td>￥<?php echo $data['price']; ?></td>
+         					<td><?php echo $data['price']; ?></td>
          				</tr>
          			</table>
                     <form method="post">
@@ -129,7 +125,7 @@
                             <input type="hidden" name="id"  value="<?php echo $id; ?>" >
                             <input type="hidden" name="time" value="<?php echo $time; ?>" >
     						<tr>
-             					<th>个人姓名</th>
+             					<th>患者姓名</th>
              					<td>
                                     <input type="text" name="name" placeholder="请输入患者真实姓名">
                                     <p><i>*</i> 医院需要您提供就诊者的真实姓名</p>
@@ -143,8 +139,8 @@
                                 </td>
              				</tr>
              				<tr>
-             					<th>入住时间</th>
-             					<td><p><?php echo $time; ?></p></td>
+             					<th>家庭住址</th>
+             					<td><input type="text" name="code" placeholder="请输入家庭地址"> </td>
              				</tr>
              				<tr>
              					<th>手机号</th>

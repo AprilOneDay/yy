@@ -1,4 +1,13 @@
 {include '/public/header'}
+	<div class="n-right left">
+            <div class="n-right-top">
+                <div class="title left">预约病房</div>
+                <div class="location right">
+                    您现在的位置：<a href="/">医院首页</a><span> > </span>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
          	<div class="n-right-about">
          		<div class="yy">
          			<div class="yuyue-title">
@@ -19,7 +28,6 @@
 								<td>房价(含服务费)</td>
 								<td width="100">操作</td>
 							</tr>
-							{if $list}
 							{loop $list $key $value}
 							<tr style="text-align: center;height: 110px;">
 								<td class="title-pic"> 
@@ -34,7 +42,6 @@
 								<td><a href="javascript:;" data-href="<?=url('order_index',array('catid'=>$catid,'id'=>$value['id']))?>" class="btn-yuding">预定</a></td>
 							</tr>
 							{/loop}
-							{/if}
 						</table>
          			</div>
          		</div>

@@ -323,6 +323,27 @@ footer{ background: #383838; margin-top: 20px;}
 .guahao table{text-align: center;}
 .guahao table td{ line-height: 25px; height: 50px; }
 
+/*医生详情*/
+.guahao-detail{ width: 940px; }
+
+.guahao-doctor{ min-height: 235px; border: #ececec 1px solid;  width: 650px; padding-left: 20px; padding-top: 20px; padding-bottom: 20px; padding-right: 10px; margin-bottom: 20px; }
+.guahao-doctor img{ float: left;  margin-right: 20px; }
+.guahao-doctor h2{ font-weight: bolder; color: #4b4b4b; font-size: 21px; padding-bottom: 10px; }
+
+.guahao-chart{ min-height: 235px; border: #ececec 1px solid;  width:250px; padding-top: 20px; padding-bottom: 20px; margin-bottom: 20px; }
+.guahao-chart h2{ font-weight: bolder; color: #4b4b4b; font-size: 21px; padding-bottom: 10px; padding-left: 10px; }
+.guahao-chart li{ padding-left: 10px; line-height: 25px; }
+.guahao-chart li label{ float: right; display: block; }
+
+.guahao-time .table-title{ background: #f1f1f1; width: 920px; color: #4b4b4b; font-weight: bolder; padding-left: 20px; line-height: 45px;}
+.guahao-time table{ width: 100%; border: #ececec 1px solid; text-align: center; }
+.guahao-time table td{ height: 50px; }
+
+.btn-guahao-detail{ display: block; width: 65px; margin: 0 auto; color: #fff; border-radius: 5px; border: none; line-height: 30px; background: #0dbb7c; cursor: pointer; }
+.btn-guahao-detail:hover{ background: red; }
+.disabled{ background: #ccc; }
+.disabled:hover{ background: #ccc;  }
+
 .link{position:relative;}
 .link .btn-guahao{display: block;line-height: 30px;}
 .nr{width:266px;height:135px;display:none;position:absolute;left:0;top:30px;z-index:10000;border:solid 1px #d9d9d9;padding:10px 10px 12px 10px;font-size: 12px;text-align:left;line-height: 22px!important;}

@@ -44,9 +44,9 @@ function ystime($value)
 
     foreach ($timeArray as $key => $value) {
         if (in_array($value, $check)) {
-            $str .= '<input type="checkbox" value="' . $value . '" name="time[]" checked="checked">' . $key . ' <input type="text" placeholder="剩余预约位" name="stock[' . $value . ']" value="' . $ysTime[$value]['stock'] . '" style="width:80px;"><input type="hidden" name="ysTime[' . $value . ']" value="' . $ysTime[$value]['id'] . '"><br/>';
+            $str .= '<input type="checkbox" value="' . $value . '" name="time[]" checked="checked">' . $key . ' <input type="text" placeholder="可预约位数" name="stock[' . $value . ']" value="' . $ysTime[$value]['stock'] . '" style="width:80px;"><input type="hidden" name="ysTime[' . $value . ']" value="' . $ysTime[$value]['id'] . '"><br/>';
         } else {
-            $str .= '<input type="checkbox" value="' . $value . '" name="time[]">' . $key . ' <input type="text" placeholder="剩余预约位" name="stock[' . $value . ']" style="width:80px;"><br/>';
+            $str .= '<input type="checkbox" value="' . $value . '" name="time[]">' . $key . ' <input type="text" placeholder="可预约位数" name="stock[' . $value . ']" style="width:80px;"><br/>';
         }
     }
 

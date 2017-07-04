@@ -1,0 +1,89 @@
+{include '/public/header'}
+    <div class="n-right left">
+            <div class="n-right-top">
+                <div class="title left">医生介绍</div>
+                <div class="location right">
+                    您现在的位置：<a href="/">医院首页</a><span> > </span>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+            <div class="n-right-about" style="padding-left: 0px;">
+                <div class="guahao-detail">
+                    <div class="guahao-doctor left">
+                        {if $doctor['thumb']}
+                        <img src="{$doctor['thumb']}" />
+                        {/if}
+                        <h2>{$doctor['title']}</h2>
+                        <p>职称:主治医生</p>
+                        <p>科室：小儿科</p>
+                        <p>擅长：小儿神经系统疾病主要包括癫痫、儿童智力障碍各种神经遗传病。</p>
+                        <p>简介：常青,妇产科副主任，主任医师，教授。临床医学博士，从事妇产科临床工作近20年，有较丰富的临床经验。 门诊时间：每周一上午产科门诊， 每周三、五上午妇科门诊。常青,妇产科副主任，主任医师，教授。临床医学博士，从事妇产科临床工作近20年，有较丰富的临床经验。 </p>
+                        <div class="clear"></div>  
+                    </div>
+
+                    <div class="guahao-chart right">
+                        <h2>最新预约</h2>
+                        <ul>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="guahao-time">
+                        <div class="table-title">选择就诊时间</div>
+                        <table border="1">
+                            <tr>
+                                <td>时段</td>
+                                {loop $week $key $value}
+                                <td>{$value['zh']}<br/>{$value['data']}</td>
+                                {/loop}
+                            </tr>
+                            <tr>
+                                <td>上午</td>
+                                {loop $week $key $value}
+                                <td>
+                                    {if isset($doctor['time'][$value['time'][0]])}
+                                        <a href="<?=url('order_index',array('time'=>$value['unix'],'catid'=>$catid,'id'=>$doctor['time'][$value['time'][0]]['id']))?>" class="btn-guahao-detail">预约</a>
+                                    {/if}
+                                </td>
+                                {/loop}
+                            </tr>
+                            <tr>
+                                <td>下午</td>
+                                {loop $week $key $value}
+                                <td>
+                                    {if isset($doctor['time'][$value['time'][1]])}
+                                        <a href="<?=url('order_index',array('time'=>$value['unix'],'catid'=>$catid,'id'=>$doctor['time'][$value['time'][0]]['id']))?>" class="btn-guahao-detail">预约</a>                                    
+                                    {/if}
+                                </td>
+                                {/loop}
+                            </tr>
+                            <tr>
+                                <td>晚上</td>
+                                {loop $week $key $value}
+                                <td>
+                                    {if isset($doctor['time'][$value['time'][2]])}
+                                        <a href="<?=url('order_index',array('time'=>$value['unix'],'catid'=>$catid,'id'=>$doctor['time'][$value['time'][0]]['id']))?>" class="btn-guahao-detail">预约</a>                                    
+                                    {/if}
+                                </td>
+                                {/loop}
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<!--end-->
+{include '/public/footer'}
+</body>
+</html>

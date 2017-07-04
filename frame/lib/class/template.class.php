@@ -17,9 +17,9 @@ class template
         $file          = fopen($this->viewPath, 'r');
         $this->content = fread($file, filesize($this->viewPath));
         $this->stampInclude();
-        $this->stampVar();
         $this->stampIf();
         $this->stampForeach();
+        $this->stampVar();
         $this->saveFile();
     }
 
@@ -107,17 +107,16 @@ class template
 
     public function stampForeach()
     {
-        $regular = '#' . $this->stampLeft . 'loop\s(.*?)\s(.*?)\s(.*?)' . $this->stampRight . '#is';
+        $regular = '#' . $this->stampLeft . 'loop\s(.*?)\s(.*?)' . $this->stampRight . '#is';
         preg_match_all($regular, $this->content, $matches);
         if ($matches) {
             foreach ($matches[0] as $key => $value) {
-                //替换模板变量
-                if ($matches[3][$key]) {
-                    $this->content = str_replace($matches[0][$key], '<?php if(' . $matches[1][$key] . '){ foreach(' . $matches[1][$key] . ' as ' . $matches[2][$key] . ' => ' . $matches[3][$key] . '){ ?>', $this->content);
+                if (stripos($matches[2][$key], ' ') !== false) {
+                    $rowTmp        = explode(' ', $matches[2][$key]);
+                    $this->content = str_replace($matches[0][$key], '<?php if(' . $matches[1][$key] . '){ foreach(' . $matches[1][$key] . ' as ' . trim($rowTmp[0]) . ' => ' . trim($rowTmp[1]) . '){ ?>', $this->content);
                 } else {
-                    $this->content = str_replace($matches[0][$key], '<?php foreach(' . $matches[1][$key] . ' as ' . $matches[2][$key] . '){ ?>', $this->content);
+                    $this->content = str_replace($matches[0][$key], '<?php if(' . $matches[1][$key] . '){ foreach(' . $matches[1][$key] . ' as ' . $matches[2][$key] . '){ ?>', $this->content);
                 }
-
             }
             $this->content = str_replace($this->stampLeft . '/loop' . $this->stampRight, '<?php }} ?>', $this->content);
         }
