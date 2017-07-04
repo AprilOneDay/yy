@@ -21,6 +21,22 @@ $(document).ready(function() {
 		},'json');
 		console.log(data);
 	});
+
+	$('.btn-guahao').click(function(){
+		var stock = $(this).attr('data-stock'); //剩余预约号数
+		layer.confirm('当前剩余预约号数：'+stock, {
+		  offset:'auto',
+		  title:'预约挂号',
+		  btn: ['预约','取消'] //按钮
+		}, function(){
+		  layer.msg('的确很重要', {icon: 1});
+		}, function(){
+		  layer.msg('也可以这样', {
+		    time: 20000, //20s后自动关闭
+		    btn: ['明白了', '知道了']
+		  });
+		});
+	});
 })
 
 

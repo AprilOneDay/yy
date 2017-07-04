@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -75,11 +76,11 @@
                     <?php
                     $category = table('category')->where(array('parentid' => 7))->field('model,controller,action,catid,catname,arrchildid,url')->find('array');
                     ?>
-                    <?php foreach($category as $k => $r){ ?>
+                    <?php if($category){ foreach($category as $k => $r){ ?>
                     <li <?php if($r['catid'] == $catid){ ?>class="curr"<?php } ?> >
                         <a href="/frame/index.php?m=<?php echo $r['model']; ?>&c=<?php echo $r['controller']; ?>&a=<?php echo $r['action']; ?>&catid=<?php echo $r['catid']; ?>"><?php echo $r['catname']; ?><b>></b></a>
                     </li>
-                    <?php } ?>
+                    <?php }} ?>
                 </ul>
             </div>
             <div class="clear"></div>
@@ -117,67 +118,96 @@ function MM_out(mmObj) {
                             <tr>
                                 <td>科室</td>
                                 <td>时段</td>
-                                <?php foreach($week as $key => $value){ ?>
-                                <td><?=$value['zh']?><br/><?=$value['data']?></td>
-                                <?php } ?>
+                                <?php if($week){ foreach($week as $key => $value){ ?>
+                                <td><?php echo $value['zh']; ?><br/><?php echo $value['data']; ?></td>
+                                <?php }} ?>
                             </tr>
                             <?php if($keshi){ ?>
-                            <?php  foreach ($keshi as $key => $value) {?>
+                            <?php if($keshi){ foreach($keshi as $key => $value){ ?>
+
                             <tr>
-                                <td rowspan="3"><?=$value['keshi']?></td>
+                                <td rowspan="3"><?php echo $value; ?></td>
                                 <td>上午</td>
-                                <?php foreach($week as $key => $value){ ?>
+                                <?php if($week){ foreach($week as $k => $v){ ?>
                                 <td>
-                                <?php $ysTime = table('ys_time')->where(array('time'=>$value['time'][0]))->field('ys_id')->find('one',true); ?>
-                                    <?php if($ysTime){ ?>
-                                        <?php foreach($ysTime as $k => $v){ ?>
-                                            <div class="link" onmouseover="MM_over(this)" onmouseout="MM_out(this)">
-                                                <a href="/index.php?m=content&c=index&a=show&catid=16&id=41" ><?php echo $doctor[$v]['title']; ?></a>
-                                                <div class="nr">
-                                                <a href="/index.php?m=content&c=index&a=show&catid=16&id=41"><img src="<?php echo $doctor[$v]['thumb']; ?>"></a>
-                                                <h2><a href="/index.php?m=content&c=index&a=show&catid=16&id=41"><?php echo $doctor[$v]['title']; ?></a></h2>
-                                                职　称：<span><?php echo $doctor[$v]['zc']; ?> </span><br>
-                                                专　长：<span><?php echo $doctor[$v]['like']; ?></span>
-                                                </div>
+                                <?php $ysTime = table('ys_time')->where(array('time'=>$v['time'][0]))->field('ys_id,stock')->find('array'); ?>
+                                    <?php if($ysTime){ foreach($ysTime as $kk => $vv){ ?>
+                                        <?php if(isset($doctor[$value][$vv['ys_id']])){ ?>
+                                        <div class="link" onmouseover="MM_over(this)" onmouseout="MM_out(this)">
+                                            <a href="javascript:;" class="btn-guahao" data-stock="<?php echo $vv['stock']; ?>">
+                                                <?php echo $doctor[$value][$vv['ys_id']]['title']; ?>
+                                            </a>
+                                            <div class="nr">
+                                            <a href="<?=url('detail',array('id'=>$doctor[$value][$vv['ys_id']]['id'],'catid'=>$catid))?>">
+                                                <img src="<?php echo $doctor[$value][$vv['ys_id']]['thumb']; ?>">
+                                            </a>
+                                            <h2>
+                                                <a href="<?=url('detail',array('id'=>$doctor[$value][$vv['ys_id']]['id'],'catid'=>$catid))?>"><?php echo $doctor[$value][$vv['ys_id']]['title']; ?></a>
+                                            </h2>
+                                            职　称：<span><?php echo $doctor[$value][$vv['ys_id']]['zc']; ?> </span><br>
+                                            专　长：<span><?php echo $doctor[$value][$vv['ys_id']]['like']; ?></span>
                                             </div>
+                                        </div>
                                         <?php } ?>
-                                    <?php }else{ ?>
-                                    &nbsp;
-                                    <?php } ?>
-                                <?php } ?>
+                                    <?php }} ?>
+                                <?php }} ?>
                                 </td>
                             </tr>
                             <tr>
                                 <td>下午</td>
-                                <?php foreach($week as $key => $value){ ?>
+                                <?php if($week){ foreach($week as $k => $v){ ?>
                                 <td>
-                                <?php $ysTime = table('ys_time')->where(array('time'=>$value['time'][1]))->field('ys_id')->find('one',true); ?>
-                                    <?php if($ysTime){ ?>
-                                        <?php foreach($ysTime as $k => $v){ ?>
-                                        <?php echo $doctor[$v]['title']; ?><br/>
+                                <?php $ysTime = table('ys_time')->where(array('time'=>$v['time'][1]))->field('ys_id,stock')->find('array'); ?>
+                                    <?php if($ysTime){ foreach($ysTime as $kk => $vv){ ?>
+                                        <?php if(isset($doctor[$value][$vv['ys_id']])){ ?>
+                                        <div class="link" onmouseover="MM_over(this)" onmouseout="MM_out(this)">
+                                            <a href="javascript:;" class="btn-guahao" data-stock="<?php echo $vv['stock']; ?>">
+                                                <?php echo $doctor[$value][$vv['ys_id']]['title']; ?>
+                                            </a>
+                                            <div class="nr">
+                                            <a href="<?=url('detail',array('id'=>$doctor[$value][$vv['ys_id']]['id'],'catid'=>$catid))?>">
+                                                <img src="<?php echo $doctor[$value][$vv['ys_id']]['thumb']; ?>">
+                                            </a>
+                                            <h2>
+                                                <a href="<?=url('detail',array('id'=>$doctor[$value][$vv['ys_id']]['id'],'catid'=>$catid))?>"><?php echo $doctor[$value][$vv['ys_id']]['title']; ?></a>
+                                            </h2>
+                                            职　称：<span><?php echo $doctor[$value][$vv['ys_id']]['zc']; ?> </span><br>
+                                            专　长：<span><?php echo $doctor[$value][$vv['ys_id']]['like']; ?></span>
+                                            </div>
+                                        </div>
                                         <?php } ?>
-                                    <?php }else{ ?>
-                                    &nbsp;
-                                    <?php } ?>
-                                <?php } ?>
+                                    <?php }} ?>
+                                <?php }} ?>
                                 </td>
                             </tr>
                             <tr>
                                 <td>晚上</td>
-                                <?php foreach($week as $key => $value){ ?>
+                                <?php if($week){ foreach($week as $k => $v){ ?>
                                 <td>
-                                <?php $ysTime = table('ys_time')->where(array('time'=>$value['time'][2]))->field('ys_id')->find('one',true); ?>
-                                    <?php if($ysTime){ ?>
-                                        <?php foreach($ysTime as $k => $v){ ?>
-                                        <?php echo $doctor[$v]['title']; ?><br/>
+                                <?php $ysTime = table('ys_time')->where(array('time'=>$v['time'][2]))->field('ys_id,stock')->find('array'); ?>
+                                    <?php if($ysTime){ foreach($ysTime as $kk => $vv){ ?>
+                                        <?php if(isset($doctor[$value][$vv['ys_id']])){ ?>
+                                        <div class="link" onmouseover="MM_over(this)" onmouseout="MM_out(this)">
+                                            <a href="javascript:;" class="btn-guahao" data-stock="<?php echo $vv['stock']; ?>">
+                                                <?php echo $doctor[$value][$vv['ys_id']]['title']; ?>
+                                            </a>
+                                            <div class="nr">
+                                            <a href="<?=url('detail',array('id'=>$doctor[$value][$vv['ys_id']]['id'],'catid'=>$catid))?>">
+                                                <img src="<?php echo $doctor[$value][$vv['ys_id']]['thumb']; ?>">
+                                            </a>
+                                            <h2>
+                                                <a href="<?=url('detail',array('id'=>$doctor[$value][$vv['ys_id']]['id'],'catid'=>$catid))?>"><?php echo $doctor[$value][$vv['ys_id']]['title']; ?></a>
+                                            </h2>
+                                            职　称：<span><?php echo $doctor[$value][$vv['ys_id']]['zc']; ?> </span><br>
+                                            专　长：<span><?php echo $doctor[$value][$vv['ys_id']]['like']; ?></span>
+                                            </div>
+                                        </div>
                                         <?php } ?>
-                                    <?php }else{ ?>
-                                    &nbsp;
-                                    <?php } ?>
-                                <?php } ?>
+                                    <?php }} ?>
+                                <?php }} ?>
                                 </td>
                             </tr>
-                            <?php } ?>
+                            <?php }} ?>
                             <?php } ?>
                         </table>
                     </div>
@@ -228,3 +258,5 @@ function MM_out(mmObj) {
         </div>
     </div>
 </footer>
+</body>
+</html>

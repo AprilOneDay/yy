@@ -113,13 +113,13 @@ class template
             foreach ($matches[0] as $key => $value) {
                 //替换模板变量
                 if ($matches[3][$key]) {
-                    $this->content = str_replace($matches[0][$key], '<?php foreach(' . $matches[1][$key] . ' as ' . $matches[2][$key] . ' => ' . $matches[3][$key] . '){ ?>', $this->content);
+                    $this->content = str_replace($matches[0][$key], '<?php if(' . $matches[1][$key] . '){ foreach(' . $matches[1][$key] . ' as ' . $matches[2][$key] . ' => ' . $matches[3][$key] . '){ ?>', $this->content);
                 } else {
                     $this->content = str_replace($matches[0][$key], '<?php foreach(' . $matches[1][$key] . ' as ' . $matches[2][$key] . '){ ?>', $this->content);
                 }
 
             }
-            $this->content = str_replace($this->stampLeft . '/loop' . $this->stampRight, '<?php } ?>', $this->content);
+            $this->content = str_replace($this->stampLeft . '/loop' . $this->stampRight, '<?php }} ?>', $this->content);
         }
     }
 }

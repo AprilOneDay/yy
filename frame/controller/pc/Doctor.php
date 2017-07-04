@@ -15,10 +15,14 @@ class Doctor extends Init
         $field        = "$ys.id,$ys.title,$ys.thumb,$ys.zc,$yd.keshi,$yd.like";
         $doctorList   = table('ys')->join($yd, "$yd.id = $ys.id", 'left')->where(array($yd . '.hospital' => $topCatid))->field($field)->find('array');
 
-        $keshi = table('ys_data')->where(array('hospital' => $topCatid))->group('keshi')->field('keshi')->find('array');
+        $keshi = table('ys_data')->where(array('hospital' => $topCatid))->group('keshi')->field('keshi')->find('one', true);
 
-        foreach ($doctorList as $key => $value) {
-            $doctor[$value['id']] = $value;
+        foreach ($keshi as $key => $value) {
+            foreach ($doctorList as $k => $v) {
+                if (in_array($value, $v)) {
+                    $doctor[$value][$v['id']] = $v;
+                }
+            }
         }
 
         $week = date('w');
@@ -39,6 +43,30 @@ class Doctor extends Init
         switch ($templateList) {
             case 'default':
                 $this->show('/pc/doctor/index');
+                break;
+            default:
+                break;
+        }
+    }
+
+    public function detail()
+    {
+        $id    = get('id', 'intval', 0);
+        $catid = get('catid', 'intval', 0);
+        if (!$catid || $id) {
+            die('参数错误');
+        }
+        $topCatid     = table('category')->where(array('catid' => $catid))->field('parentid')->find('one');
+        $templateList = $this->checkedCatid();
+
+        $doctor         = table('ys')->where(array('id' => $id))->field('id,title,thumb,zc,keshi,like')->find();
+        $doctor['time'] = table('ys_time')->where(array('ys_id' => $id))->find('array');
+
+        $this->assign('catid', $catid);
+        $this->assign('doctor', $doctor);
+        switch ($templateList) {
+            case 'default':
+                $this->show('/pc/doctor/detail');
                 break;
             default:
                 break;
