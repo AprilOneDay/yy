@@ -1,14 +1,17 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=7" />
-    <title>{if isset($SEO['title']) && !empty($SEO['title'])}{$SEO['title']}{/if}{$SEO['site_title']}</title>
-    <meta name="keywords" content="{$SEO['keyword']}">
-    <meta name="description" content="{$SEO['description']}">
+    <title><?php echo $this->title; ?></title>
+    <meta name="keywords" content="<?php echo $this->keywords; ?>">
+    <meta name="description" content="<?php echo $this->description; ?>">
 
-    <link rel="stylesheet" type="text/css" href="/css/dsyy/css.css?v={$rand}"/>
-    <script type="text/jscript" src="/js/dsyy/jquery-1.8.3.min.js"></script>
-    <script type="text/javascript" src="/js/dsyy/style.js?v={$rand}"></script>
+    <link rel="stylesheet" type="text/css" href="/css/dsyy/css.css"/>
+<!--     <link rel="stylesheet" type="text/css" href="<?=vars('urls','puls')?>/layer/css/layer.css"> -->
+    <script type="text/jscript" src="/js/dsyy/jquery-1.12.3.min.js"></script>
+    <script type="text/jscript" src="<?=vars('urls','puls')?>/layer/layer.js"></script>
+    <script type="text/javascript" src="/js/dsyy/style.js"></script>
 </head>
 <body>
 <div class="top-bg w100">
@@ -71,18 +74,18 @@
             <div class="lemid">
                 <ul>
                     <?php
-                    $data = table('category')->where(array('parentid' => 7))->field('model,controller,action,catid,catname,arrchildid,url')->find('array');
-                    foreach ($data as $k => $r) { 
+                    $category = table('category')->where(array('parentid' => 7))->field('model,controller,action,catid,catname,arrchildid,url')->find('array');
                     ?>
-                    <li <?php if($r['catid'] == $_GET['catid']){?> class="curr" <?php } ?> >
-                        <a href="/frame/index.php?m=<?=$r['model']?>&c=<?=$r['controller']?>&a=<?=$r['action']?>&catid=<?=$r['catid']?>"><?=$r['catname']?><b>></b></a>
+                    <?php if($category){ foreach($category as $k => $r){ ?>
+                    <li <?php if($r['catid'] == $catid){ ?>class="curr"<?php } ?> >
+                        <a href="/frame/index.php?m=<?php echo $r['model']; ?>&c=<?php echo $r['controller']; ?>&a=<?php echo $r['action']; ?>&catid=<?php echo $r['catid']; ?>"><?php echo $r['catname']; ?><b>></b></a>
                     </li>
-                    <?php } ?>
+                    <?php }} ?>
                 </ul>
             </div>
             <div class="clear"></div>
         </div>
-        <div class="n-right left">
+    <div class="n-right left">
             <div class="n-right-top">
                 <div class="title left">预约病房</div>
                 <div class="location right">
@@ -94,41 +97,76 @@
          	<div class="n-right-about">
          		<div class="yy">
          			<div class="yuyue-title">
-      						<img src="/images/2017050601.jpg">
+      						<img src="/images/2017050604.jpg">
          			</div>
-         			<div class="search">
-         				<input type="text" class="search-3" id="date-range0" placeholder="入住退房时间">
-         				<!--
-         				<input type="text" class="search-1" id="date-range0"> <span style="color: #a1a1a1;">—</span>
-         				<input type="text" class="search-2">
-         				-->
-         				<input type="submit" value="搜索" class="btn-search">
-         			</div>
-         			<div class="yy-list">
-						<table border="1" width="98%">
-							<tr style="text-align: center;background-color: #fcfcfc;line-height: 60px;">
-								<td width="270">房型</td>
-								<td width="110">面积</td>
-								<td width="100">床型</td>
-								<td>最多入住人数</td>
-								<td width="100">宽带</td>
-								<td>房价(含服务费)</td>
-								<td width="100">操作</td>
-							</tr>
-							<tr style="text-align: center;height: 110px;">
-								<td class="title-pic"> 
-									<img src="/images/3新闻中心.jpg" width="110" height="80" class="left">
-									<p class="title left">舒适单间<span><a href=""> 查看详情 ▽</a></span></p>
-								</td>
-								<td>45m<sup>2</sup></td>
-								<td>双人床</td>
-								<td>2人</td>
-								<td><span style="color:green">免费</span></td>
-								<td style="color: #ff9100;">¥400</td>
-								<td><a href="<?=url('order_index',array('catid'=>$_GET['catid']))?>" class="btn-yuding">预定</a></td>
-							</tr>
-						</table>
-         			</div>
+
+         			<div class="from">
+         			<span>预约确认与输入个人信息</span>
+         			<table border="1" width="98%"  class="order-info">
+         				<tr>
+         					<th>房型</th>
+         					<td><?php echo $data['title']; ?></td>
+         				</tr>
+         				<tr>
+         					<th>面积</th>
+         					<td><?php echo $data['area']; ?>m<sup>2</sup></td>
+         				</tr>
+         				<tr>
+         					<th>楼层</th>
+         					<td><?php echo $data['floor']; ?>楼</td>
+         				</tr>
+         				<tr>
+         					<th>床型</th>
+         					<td><?php echo $data['bed']; ?></td>
+         				</tr>
+         				<tr>
+         					<th>费用</th>
+         					<td>￥<?php echo $data['price']; ?></td>
+         				</tr>
+         			</table>
+                    <form method="post">
+             			<table border="1" width="98%" class="order-index">
+                            <input type="hidden" name="id"  value="<?php echo $id; ?>" >
+                            <input type="hidden" name="time" value="<?php echo $time; ?>" >
+    						<tr>
+             					<th>个人姓名</th>
+             					<td>
+                                    <input type="text" name="name" placeholder="请输入患者真实姓名">
+                                    <p><i>*</i> 医院需要您提供就诊者的真实姓名</p>
+                                </td>
+             				</tr>
+             				<tr>
+             					<th>身份证号</th>
+             					<td>
+                                    <input type="text" name="code" placeholder="请输入患者真实身份证号"> 
+                                    <p><i>*</i> 身份证是您的取号凭证，身份证号码输入错误将无法取号！</p>
+                                </td>
+             				</tr>
+             				<tr>
+             					<th>入住时间</th>
+             					<td><p><?php echo $time; ?></p></td>
+             				</tr>
+             				<tr>
+             					<th>手机号</th>
+             					<td>
+                                    <input type="text" name="mobile" placeholder="请输入手机号">
+                                    <p><i>*</i> 此手机号将接收预约挂号成功与否的反馈信息，没有费用的产生。</p>
+                                </td>
+             				</tr>
+             				<tr>
+             					<th>验证码</th>
+             					<td>
+                                    <input type="text" name="verification" placeholder="请输入验证码">
+                                    <input type="button" value="获取验证码"></input>
+                                </td>
+             				</tr>
+             			</table>
+                            <div class="complay">
+                                <input type="button" value="返回上一页" style="background: #b2b2b2;"></input>
+                                <input type="button" value="预约确认" class="saveYuyueOrder"></input>
+                            </div>
+             			</div>
+                    </form>
          		</div>
             </div>
         </div>
@@ -176,7 +214,5 @@
         </div>
     </div>
 </footer>
-<link rel="stylesheet" href="/css/dsyy/daterangepicker.min.css">
-<script type="text/javascript" src="/js/dsyy/moment.min.js"></script>
-<script type="text/javascript" src="/js/dsyy/jquery.daterangepicker.min.js"></script>
-<script src="/js/dsyy/demo.js"></script>
+</body>
+</html>

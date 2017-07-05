@@ -159,7 +159,7 @@ function comprise($path)
 function vars($path = 'urls', $name = '')
 {
     $data = include FRAME_LIB_CONFIG_PATH . $path . '.php';
-    if (!$name) {
+    if ($name === '') {
         return $data;
     }
 

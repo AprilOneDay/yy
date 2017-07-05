@@ -15,24 +15,28 @@
                         <img src="{$doctor['thumb']}" />
                         {/if}
                         <h2>{$doctor['title']}</h2>
-                        <p>职称:主治医生</p>
-                        <p>科室：小儿科</p>
-                        <p>擅长：小儿神经系统疾病主要包括癫痫、儿童智力障碍各种神经遗传病。</p>
-                        <p>简介：常青,妇产科副主任，主任医师，教授。临床医学博士，从事妇产科临床工作近20年，有较丰富的临床经验。 门诊时间：每周一上午产科门诊， 每周三、五上午妇科门诊。常青,妇产科副主任，主任医师，教授。临床医学博士，从事妇产科临床工作近20年，有较丰富的临床经验。 </p>
+                        
+                        {if $doctor['zc']}
+                            <p>职称: {$doctor['zc']}</p>
+                        {/if}
+
+                        {if $doctor['data']['keshi']}
+                            <p>科室：{$doctor['data']['keshi']}</p>
+                        {/if}
+
+                        {if $doctor['data']['like']}
+                            <p>擅长：{$doctor['data']['like']}</p>
+                        {/if}
+                        <p>简介：{$doctor['data']['content']}</p>
                         <div class="clear"></div>  
                     </div>
 
                     <div class="guahao-chart right">
                         <h2>最新预约</h2>
                         <ul>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            {loop $ordersTop $key $value}
+                                <li>{$value['name']}<label>{$value['time_copy']}</label></li>
+                            {/loop}
                         </ul>
                     </div>
                     <div class="clear"></div>

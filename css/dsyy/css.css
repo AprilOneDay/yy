@@ -332,7 +332,7 @@ footer{ background: #383838; margin-top: 20px;}
 
 .guahao-chart{ min-height: 235px; border: #ececec 1px solid;  width:250px; padding-top: 20px; padding-bottom: 20px; margin-bottom: 20px; }
 .guahao-chart h2{ font-weight: bolder; color: #4b4b4b; font-size: 21px; padding-bottom: 10px; padding-left: 10px; }
-.guahao-chart li{ padding-left: 10px; line-height: 25px; }
+.guahao-chart li{ padding-left: 10px; line-height: 25px; padding-right: 10px; }
 .guahao-chart li label{ float: right; display: block; }
 
 .guahao-time .table-title{ background: #f1f1f1; width: 920px; color: #4b4b4b; font-weight: bolder; padding-left: 20px; line-height: 45px;}

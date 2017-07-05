@@ -60,8 +60,9 @@ class Doctor extends Init
         $topCatid     = table('category')->where(array('catid' => $catid))->field('parentid')->find('one');
         $templateList = $this->checkedCatid();
 
-        $doctor = table('ys')->where(array('id' => $id))->field('id,title,thumb,zc')->find();
-        $ysTime = table('ys_time')->where(array('ys_id' => $id))->find('array');
+        $doctor         = table('ys')->where(array('id' => $id))->field('id,title,thumb,zc')->find();
+        $doctor['data'] = table('ys_data')->where(array('id' => $id))->field('content,`like`,keshi')->find();
+        $ysTime         = table('ys_time')->where(array('ys_id' => $id))->find('array');
         if ($ysTime) {
             foreach ($ysTime as $key => $value) {
                 $doctorTime[$value['time']] = $value;
@@ -81,9 +82,18 @@ class Doctor extends Init
             $week == 6 ? $week = 0 : $week++;
         }
 
+        //最新预约信息
+        $to        = table('orders')->tableName();
+        $td        = table('orders_doctor')->tableName();
+        $ordersTop = table('orders')->join($td, "$to.order_sn = $td.order_sn", 'left')->field("$to.name,$td.time_copy")->order("$to.created desc")->limit('0,8')->find('array');
+        foreach ($ordersTop as $key => $value) {
+            $ordersTop[$key]['name'] = substr($value['name'], 0, 3) . '**';
+        }
+
         $this->assign('catid', $catid);
         $this->assign('doctor', $doctor);
         $this->assign('week', $weekArray);
+        $this->assign('ordersTop', $ordersTop);
         switch ($templateList) {
             case 'default':
                 $this->show('/pc/doctor/detail');

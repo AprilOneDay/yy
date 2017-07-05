@@ -101,24 +101,28 @@
                         <img src="<?php echo $doctor['thumb']; ?>" />
                         <?php } ?>
                         <h2><?php echo $doctor['title']; ?></h2>
-                        <p>职称:主治医生</p>
-                        <p>科室：小儿科</p>
-                        <p>擅长：小儿神经系统疾病主要包括癫痫、儿童智力障碍各种神经遗传病。</p>
-                        <p>简介：常青,妇产科副主任，主任医师，教授。临床医学博士，从事妇产科临床工作近20年，有较丰富的临床经验。 门诊时间：每周一上午产科门诊， 每周三、五上午妇科门诊。常青,妇产科副主任，主任医师，教授。临床医学博士，从事妇产科临床工作近20年，有较丰富的临床经验。 </p>
+                        
+                        <?php if($doctor['zc']){ ?>
+                            <p>职称: <?php echo $doctor['zc']; ?></p>
+                        <?php } ?>
+
+                        <?php if($doctor['data']['keshi']){ ?>
+                            <p>科室：<?php echo $doctor['data']['keshi']; ?></p>
+                        <?php } ?>
+
+                        <?php if($doctor['data']['like']){ ?>
+                            <p>擅长：<?php echo $doctor['data']['like']; ?></p>
+                        <?php } ?>
+                        <p>简介：<?php echo $doctor['data']['content']; ?></p>
                         <div class="clear"></div>  
                     </div>
 
                     <div class="guahao-chart right">
                         <h2>最新预约</h2>
                         <ul>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
-                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <?php if($ordersTop){ foreach($ordersTop as $key => $value){ ?>
+                                <li><?php echo $value['name']; ?><label><?php echo $value['time_copy']; ?></label></li>
+                            <?php }} ?>
                         </ul>
                     </div>
                     <div class="clear"></div>

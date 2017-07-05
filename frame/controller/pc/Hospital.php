@@ -21,6 +21,10 @@ class Hospital extends Init
         $this->assign('catid', $catid);
         $this->assign('list', $list);
         $this->assign('wifiCopy', $wifiCopy);
+
+        dao('Sms')->send();
+        exit();
+
         switch ($templateList) {
             case 'default':
                 $this->show('/pc/hospital/index');
