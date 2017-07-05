@@ -96,8 +96,8 @@ class Doctor extends Init
     public function orderIndex()
     {
         $catid = get('catid', 'intval', 0);
-        $id    = get('id', 'intval', 0);
-        $time  = get('time', 'trim');
+        $id    = get('id', 'intval', 0); //ys_time主键
+        $time  = get('time', 'trim'); //时间戳
         if (!$id || !$time) {
             die('参数错误');
         }
@@ -140,7 +140,7 @@ class Doctor extends Init
         $address      = get('address', 'text');
         $name         = get('name', 'text');
         $mobile       = get('mobile', 'text');
-        $code         = get('code', 'text');
+        $code         = substr(get('code', 'text'), 0, 18);
         $verification = get('verification', 'text');
 
         if (!$ysTimeId || !$guahaoTime || !$timeCopy) {
@@ -162,6 +162,26 @@ class Doctor extends Init
         $ysTime = table('ys_time')->where(array('id' => $ysTimeId))->field('id,ys_id,time,stock')->find();
         if (!$ysTime) {
             $this->ajaxReturn(array('status' => false, 'msg' => '预约失败,请刷新重试'));
+        }
+
+        //判断是否超出库存
+        $to = table('orders')->tableName();
+        $td = table('orders_doctor')->tableName();
+
+        $map[$to . '.status']      = 1;
+        $map[$td . '.guahao_time'] = $guahaoTime;
+        $map[$td . '.guahao_type'] = $ysTime['time'];
+
+        $stock = table('orders')->join($td, "$to.order_sn = $td.order_sn", 'left')->where($map)->count();
+        if ($stock >= $ysTime['stock']) {
+            $this->ajaxReturn(array('status' => false, 'msg' => '预约已满,请选择其他时段'));
+        }
+
+        //防止重复预约
+        $map[$to . '.code'] = $code;
+        $isOrders           = table('orders')->join($td, "$to.order_sn = $td.order_sn", 'left')->where($map)->field("$to.id")->find('one');
+        if ($isOrders) {
+            $this->ajaxReturn(array('status' => false, 'msg' => '该时间段您已预约,请勿重复预约'));
         }
 
         $doctor = table('ys')->where(array('id' => $ysTime['ys_id']))->field('title,price')->find();

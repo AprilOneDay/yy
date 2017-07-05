@@ -122,6 +122,7 @@
          			</table>
                     <form method="post">
              			<table border="1" width="98%" class="order-index">
+                            <input type="hidden" name="catid" value="<?php echo $catid; ?>">
                             <input type="hidden" name="time_copy"  value="<?php echo $data['time']; ?>">
                             <input type="hidden" name="ys_time_id" value="<?php echo $data['id']; ?>">
                             <input type="hidden" name="guahao_time" value="<?php echo $data['unix']; ?>">

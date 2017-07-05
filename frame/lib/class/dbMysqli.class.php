@@ -362,7 +362,7 @@ class dbMysqli
         if ($this->total == 0) {return false;}
         //单个字段模式
         if ($value == 'one' && !$isArray) {
-            $row = mysqli_fetch_array($result, MYSQL_ASSOC);
+            $row = mysqli_fetch_array($result, MYSQL_NUM);
             if (empty($row)) {
                 return false;
             }
@@ -371,7 +371,7 @@ class dbMysqli
                 die('sql模块中one只能查询单个字段内容请设置field函数');
             }
 
-            return $row[$this->field];
+            return $row[0];
         }
         //单字段数组模式
         elseif ($value == 'one' && $isArray) {

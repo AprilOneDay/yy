@@ -15,7 +15,10 @@ class Init extends base
         }
         $category = table('category')->where(array('catid' => $catid))->field('setting')->find();
         !$category ? die('栏目信息不存在') : '';
-        @eval("\$setting = $category[setting];");
+        $setting = json_decode($category['setting'], true);
+        if (!$setting) {
+            @eval("\$setting = $category[setting];");
+        }
 
         if ($setting['meta_title']) {
             $this->title       = $setting['meta_title'];

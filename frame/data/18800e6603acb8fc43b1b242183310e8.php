@@ -130,11 +130,11 @@ function MM_out(mmObj) {
                                 <td>上午</td>
                                 <?php if($week){ foreach($week as $k => $v){ ?>
                                 <td>
-                                <?php $ysTime = table('ys_time')->where(array('time'=>$v['time'][0]))->field('ys_id,stock')->find('array'); ?>
+                                <?php $ysTime = table('ys_time')->where(array('time'=>$v['time'][0]))->field('id,ys_id,stock')->find('array'); ?>
                                     <?php if($ysTime){ foreach($ysTime as $kk => $vv){ ?>
                                         <?php if(isset($doctor[$value][$vv['ys_id']])){ ?>
                                         <div class="link" onmouseover="MM_over(this)" onmouseout="MM_out(this)">
-                                            <a href="javascript:;" class="btn-guahao" data-stock="<?php echo $vv['stock']; ?>">
+                                            <a href="javascript:;" class="btn-guahao" data-href="<?=url('order_index',array('time'=>$v['unix'],'catid'=>$catid,'id'=>$vv['id']))?>" data-stock="<?php echo $vv['stock']; ?>">
                                                 <?php echo $doctor[$value][$vv['ys_id']]['title']; ?>
                                             </a>
                                             <div class="nr">
@@ -157,11 +157,11 @@ function MM_out(mmObj) {
                                 <td>下午</td>
                                 <?php if($week){ foreach($week as $k => $v){ ?>
                                 <td>
-                                <?php $ysTime = table('ys_time')->where(array('time'=>$v['time'][1]))->field('ys_id,stock')->find('array'); ?>
+                                <?php $ysTime = table('ys_time')->where(array('time'=>$v['time'][1]))->field('id,ys_id,stock')->find('array'); ?>
                                     <?php if($ysTime){ foreach($ysTime as $kk => $vv){ ?>
                                         <?php if(isset($doctor[$value][$vv['ys_id']])){ ?>
                                         <div class="link" onmouseover="MM_over(this)" onmouseout="MM_out(this)">
-                                            <a href="javascript:;" class="btn-guahao" data-stock="<?php echo $vv['stock']; ?>">
+                                            <a href="javascript:;" class="btn-guahao" data-href="<?=url('order_index',array('time'=>$v['unix'],'catid'=>$catid,'id'=>$vv['id']))?>" data-stock="<?php echo $vv['stock']; ?>">
                                                 <?php echo $doctor[$value][$vv['ys_id']]['title']; ?>
                                             </a>
                                             <div class="nr">
@@ -184,11 +184,11 @@ function MM_out(mmObj) {
                                 <td>晚上</td>
                                 <?php if($week){ foreach($week as $k => $v){ ?>
                                 <td>
-                                <?php $ysTime = table('ys_time')->where(array('time'=>$v['time'][2]))->field('ys_id,stock')->find('array'); ?>
+                                <?php $ysTime = table('ys_time')->where(array('time'=>$v['time'][2]))->field('id,ys_id,stock')->find('array'); ?>
                                     <?php if($ysTime){ foreach($ysTime as $kk => $vv){ ?>
                                         <?php if(isset($doctor[$value][$vv['ys_id']])){ ?>
                                         <div class="link" onmouseover="MM_over(this)" onmouseout="MM_out(this)">
-                                            <a href="javascript:;" class="btn-guahao" data-stock="<?php echo $vv['stock']; ?>">
+                                            <a href="javascript:;" class="btn-guahao" data-href="<?=url('order_index',array('time'=>$v['unix'],'catid'=>$catid,'id'=>$vv['id']))?>" data-stock="<?php echo $vv['stock']; ?>">
                                                 <?php echo $doctor[$value][$vv['ys_id']]['title']; ?>
                                             </a>
                                             <div class="nr">
