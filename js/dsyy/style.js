@@ -9,11 +9,22 @@ $(document).ready(function() {
 		}
 	});
 
-	$(".saveOrder").click(function(){
+	$(".saveYuyueOrder").click(function(){
 		var data = $('form').serialize();
-		$.post('/frame/index.php?m=pc&c=Hospital&a=save_order&'+data,function(result){
+		$.post('/frame/index.php?m=pc&c=hospital&a=save_order&'+data,function(result){
 			if(result.status){
-				console.log('/frame/index.php?m=pc&c=pay&a=index&order_sn='+result.data.order_sn);
+				window.location.href = '/frame/index.php?m=pc&c=pay&a=index&order_sn='+result.data.order_sn+'&catid='+result.data.catid;
+			}else{
+				layer.msg(result.msg);
+			}
+		},'json');
+		console.log(data);
+	});
+
+	$(".saveGuahaoOrder").click(function(){
+		var data = $('form').serialize();
+		$.post('/frame/index.php?m=pc&c=doctor&a=save_order&'+data,function(result){
+			if(result.status){
 				window.location.href = '/frame/index.php?m=pc&c=pay&a=index&order_sn='+result.data.order_sn+'&catid='+result.data.catid;
 			}else{
 				layer.msg(result.msg);

@@ -122,8 +122,9 @@
          			</table>
                     <form method="post">
              			<table border="1" width="98%" class="order-index">
-                            <input type="hidden" name="id"  value="<?php echo $id; ?>" >
-                            <input type="hidden" name="time" value="<?php echo $time; ?>" >
+                            <input type="hidden" name="time_copy"  value="<?php echo $data['time']; ?>">
+                            <input type="hidden" name="ys_time_id" value="<?php echo $data['id']; ?>">
+                            <input type="hidden" name="guahao_time" value="<?php echo $data['unix']; ?>">
     						<tr>
              					<th>患者姓名</th>
              					<td>
@@ -140,7 +141,7 @@
              				</tr>
              				<tr>
              					<th>家庭住址</th>
-             					<td><input type="text" name="code" placeholder="请输入家庭地址"> </td>
+             					<td><input type="text" name="address" placeholder="请输入家庭地址"> </td>
              				</tr>
              				<tr>
              					<th>手机号</th>
@@ -159,7 +160,7 @@
              			</table>
                             <div class="complay">
                                 <input type="button" value="返回上一页" style="background: #b2b2b2;"></input>
-                                <input type="button" value="预约确认" class="saveOrder"></input>
+                                <input type="button" value="预约确认" class="saveGuahaoOrder"></input>
                             </div>
              			</div>
                     </form>

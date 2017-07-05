@@ -112,13 +112,11 @@ class Doctor extends Init
             '71' => '星期日 上午', '72' => '星期日 下午', '73' => '星期日 晚上',
         );
 
-        $data                    = table('ys_time')->where(array('id' => $id))->field('ys_id,time,stock')->find();
+        $data                    = table('ys_time')->where(array('id' => $id))->field('id,ys_id,time,stock')->find();
         $data['time']            = date('Y-m-d', $time) . ' ' . $weekCopy[$data['time']];
         $data['unix']            = $time;
         $data['doctor']          = table('ys')->where(array('id' => $data['ys_id']))->field('title,price')->find();
         $data['doctor']['keshi'] = table('ys_data')->where(array('id' => $data['ys_id']))->field('keshi')->find('one');
-
-        print_r($data);
 
         //获取所选模板
         $templateList = $this->checkedCatid();
@@ -131,6 +129,81 @@ class Doctor extends Init
             default:
                 break;
         }
+    }
+
+    public function saveOrder()
+    {
+        $catid        = get('catid', 'intval', 0);
+        $ysTimeId     = get('ys_time_id', 'intval', 0);
+        $timeCopy     = get('time_copy', 'trim');
+        $guahaoTime   = get('guahao_time', 'trim');
+        $address      = get('address', 'text');
+        $name         = get('name', 'text');
+        $mobile       = get('mobile', 'text');
+        $code         = get('code', 'text');
+        $verification = get('verification', 'text');
+
+        if (!$ysTimeId || !$guahaoTime || !$timeCopy) {
+            die('参数错误');
+        }
+
+        if (!$name) {
+            $this->ajaxReturn(array('status' => false, 'msg' => '请填写姓名'));
+        }
+
+        if (!$mobile) {
+            $this->ajaxReturn(array('status' => false, 'msg' => '请填写手机号'));
+        }
+
+        if (!$verification) {
+            $this->ajaxReturn(array('status' => false, 'msg' => '验证码错误'));
+        }
+
+        $ysTime = table('ys_time')->where(array('id' => $ysTimeId))->field('id,ys_id,time,stock')->find();
+        if (!$ysTime) {
+            $this->ajaxReturn(array('status' => false, 'msg' => '预约失败,请刷新重试'));
+        }
+
+        $doctor = table('ys')->where(array('id' => $ysTime['ys_id']))->field('title,price')->find();
+        if (!$doctor) {
+            $this->ajaxReturn(array('status' => false, 'msg' => '未查询到相关医生信息,请刷新重试'));
+        }
+
+        $doctorData = table('ys_data')->where(array('id' => $ysTime['ys_id']))->field('keshi,hospital')->find();
+        if (!$doctorData) {
+            $this->ajaxReturn(array('status' => false, 'msg' => '未查询到相关医院信息,请刷新重试'));
+        }
+        //医院名称
+        $hospital = table('category')->where(array('catid' => $doctorData['hospital']))->field('catname')->find('one');
+
+        //取微秒
+        $orderSn = date('Ymd') . substr(implode(null, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+
+        $data['order_sn'] = $orderSn;
+        $data['title']    = $doctor['title'];
+        $data['amount']   = $doctor['price'];
+        $data['mobile']   = $mobile;
+        $data['name']     = $name;
+        $data['code']     = $code;
+        $data['created']  = time();
+        $data['type']     = 2;
+
+        $dataInfo['order_sn']    = $orderSn;
+        $dataInfo['ys_time_id']  = $ysTimeId;
+        $dataInfo['address']     = $address;
+        $dataInfo['guahao_time'] = $guahaoTime;
+        $dataInfo['time_copy']   = $timeCopy;
+        $dataInfo['hospital']    = $hospital;
+        $dataInfo['doctor']      = $doctor['title'];
+        $dataInfo['keshi']       = $doctorData['keshi'];
+        $dataInfo['guahao_type'] = $ysTime['time'];
+
+        $reslut = table('orders')->add($data);
+        if ($reslut) {
+            table('orders_doctor')->add($dataInfo);
+        }
+
+        $this->ajaxReturn(array('status' => true, 'msg' => '提交成功', 'data' => array('order_sn' => $orderSn, 'catid' => $catid)));
     }
 
     public function week($week)
