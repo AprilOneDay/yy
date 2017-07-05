@@ -85,9 +85,9 @@
             </div>
             <div class="clear"></div>
         </div>
-	<div class="n-right left">
+    <div class="n-right left">
             <div class="n-right-top">
-                <div class="title left">预约病房</div>
+                <div class="title left">预约挂号</div>
                 <div class="location right">
                     您现在的位置：<a href="/">医院首页</a><span> > </span>
                 </div>
@@ -97,39 +97,72 @@
          	<div class="n-right-about">
          		<div class="yy">
          			<div class="yuyue-title">
-      						<img src="/images/2017050601.jpg">
+      						<img src="/images/2017050604.jpg">
          			</div>
-         			<div class="search">
-         				<input type="text" class="search-3" id="date-range0" name="time" placeholder="入住退房时间">
-         				<input type="submit" value="搜索" class="btn-search">
-         			</div>
-         			<div class="yy-list">
-						<table border="1" width="98%">
-							<tr style="text-align: center;background-color: #fcfcfc;line-height: 60px;">
-								<td width="270">房型</td>
-								<td width="110">面积</td>
-								<td width="100">床型</td>
-								<td>最多入住人数</td>
-								<td width="100">宽带</td>
-								<td>房价(含服务费)</td>
-								<td width="100">操作</td>
-							</tr>
-							<?php if($list){ foreach($list as $key => $value){ ?>
-							<tr style="text-align: center;height: 110px;">
-								<td class="title-pic"> 
-									<img src="<?php echo $value['thumb']; ?>" width="110" height="80" class="left">
-									<p class="title left"><?php echo $value['title']; ?><span><a href=""> 查看详情 ▽</a></span></p>
-								</td>
-								<td><?php echo $value['area']; ?>m<sup>2</sup></td>
-								<td><?=substr($value['bed'],0,9)?></td>
-								<td><?php echo $value['num']; ?>人</td>
-								<td><span style="color:green"><?php echo $wifiCopy[$value['wifi']]; ?></span></td>
-								<td style="color: #ff9100;">¥<?php echo $value['price']; ?></td>
-								<td><a href="javascript:;" data-href="<?=url('order_index',array('catid'=>$catid,'id'=>$value['id']))?>" class="btn-yuding">预定</a></td>
-							</tr>
-							<?php }} ?>
-						</table>
-         			</div>
+
+         			<div class="from">
+         			<span>预约确认与输入个人信息</span>
+         			<table border="1" width="98%"  class="order-info">
+         				<tr>
+         					<th>挂号科室</th>
+         					<td><?php echo $data['doctor']['keshi']; ?></td>
+         				</tr>
+         				<tr>
+         					<th>医生</th>
+         					<td><?php echo $data['doctor']['title']; ?></td>
+         				</tr>
+         				<tr>
+         					<th>就诊时间</th>
+         					<td><?php echo $data['time']; ?></td>
+         				</tr>
+         				<tr>
+         					<th>费用</th>
+         					<td>￥<?php echo $data['doctor']['price']; ?></td>
+         				</tr>
+         			</table>
+                    <form method="post">
+             			<table border="1" width="98%" class="order-index">
+                            <input type="hidden" name="id"  value="<?php echo $id; ?>" >
+                            <input type="hidden" name="time" value="<?php echo $time; ?>" >
+    						<tr>
+             					<th>患者姓名</th>
+             					<td>
+                                    <input type="text" name="name" placeholder="请输入患者真实姓名">
+                                    <p><i>*</i> 医院需要您提供就诊者的真实姓名</p>
+                                </td>
+             				</tr>
+             				<tr>
+             					<th>身份证号</th>
+             					<td>
+                                    <input type="text" name="code" placeholder="请输入患者真实身份证号"> 
+                                    <p><i>*</i> 身份证是您的取号凭证，身份证号码输入错误将无法取号！</p>
+                                </td>
+             				</tr>
+             				<tr>
+             					<th>家庭住址</th>
+             					<td><input type="text" name="code" placeholder="请输入家庭地址"> </td>
+             				</tr>
+             				<tr>
+             					<th>手机号</th>
+             					<td>
+                                    <input type="text" name="mobile" placeholder="请输入手机号">
+                                    <p><i>*</i> 此手机号将接收预约挂号成功与否的反馈信息，没有费用的产生。</p>
+                                </td>
+             				</tr>
+             				<tr>
+             					<th>验证码</th>
+             					<td>
+                                    <input type="text" name="verification" placeholder="请输入验证码">
+                                    <input type="button" value="获取验证码"></input>
+                                </td>
+             				</tr>
+             			</table>
+                            <div class="complay">
+                                <input type="button" value="返回上一页" style="background: #b2b2b2;"></input>
+                                <input type="button" value="预约确认" class="saveOrder"></input>
+                            </div>
+             			</div>
+                    </form>
          		</div>
             </div>
         </div>
@@ -178,8 +211,4 @@
     </div>
 </footer>
 </body>
-<link rel="stylesheet" href="/css/dsyy/daterangepicker.min.css">
-<script type="text/javascript" src="/js/dsyy/moment.min.js"></script>
-<script type="text/javascript" src="/js/dsyy/jquery.daterangepicker.min.js"></script>
-<script src="/js/dsyy/demo.js"></script>
 </html>

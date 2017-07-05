@@ -8,13 +8,15 @@ class Hospital extends Init
         $pageNo = get('pageNo', 'intval', 1);
 
         $wifiCopy = array('1' => '免费', '2' => '收费', '3' => '无');
+        $topCatid = table('category')->where(array('catid' => $catid))->field('parentid')->find('one');
 
         //获取所选模板
         $templateList = $this->checkedCatid();
         $room         = table('room')->tableName();
         $roomData     = table('room_data')->tableName();
-        $field        = "$room.id as id,$room.thumb,$room.description,$room.stock,$room.num,$room.room_type,$room.wifi,$room.bed,$room.price,$room.area,$room.title,$roomData.album";
-        $list         = table('room')->join($roomData, "$room.id = $roomData.id", 'left')->field($field)->find('array');
+
+        $field = "$room.id as id,$room.thumb,$room.description,$room.stock,$room.num,$room.room_type,$room.wifi,$room.bed,$room.price,$room.area,$room.title,$roomData.album";
+        $list  = table('room')->join($roomData, "$room.id = $roomData.id", 'left')->where(array($roomData . '.hospital' => $topCatid))->field($field)->find('array');
 
         $this->assign('catid', $catid);
         $this->assign('list', $list);

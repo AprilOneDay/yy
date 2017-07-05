@@ -275,13 +275,18 @@ class content extends admin
                     $data['ys_id'] = $id;
                     $data['time']  = $value;
                     $data['stock'] = (int) $_POST['stock'][$value];
-                    // 编辑
-                    if (isset($_POST['ysTime'][$value])) {
-                        table('ys_time')->where(array('id' => $_POST['ysTime'][$value]))->save($data);
-                    }
-                    // 添加
-                    else {
-                        table('ys_time')->add($data);
+
+                    //判断是否存在记录
+                    $is = table('ys_time')->where(array('ys_id' => $id, 'time' => $value))->field('id')->find('one');
+                    if (!$is) {
+                        // 编辑
+                        if (isset($_POST['ysTime'][$value])) {
+                            table('ys_time')->where(array('id' => $_POST['ysTime'][$value]))->save($data);
+                        }
+                        // 添加
+                        else {
+                            table('ys_time')->add($data);
+                        }
                     }
 
                 }

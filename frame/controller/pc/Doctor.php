@@ -115,7 +115,7 @@ class Doctor extends Init
         $data                    = table('ys_time')->where(array('id' => $id))->field('ys_id,time,stock')->find();
         $data['time']            = date('Y-m-d', $time) . ' ' . $weekCopy[$data['time']];
         $data['unix']            = $time;
-        $data['doctor']          = table('ys')->where(array('id' => $data['ys_id']))->field('title')->find();
+        $data['doctor']          = table('ys')->where(array('id' => $data['ys_id']))->field('title,price')->find();
         $data['doctor']['keshi'] = table('ys_data')->where(array('id' => $data['ys_id']))->field('keshi')->find('one');
 
         print_r($data);

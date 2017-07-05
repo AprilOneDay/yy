@@ -85,130 +85,82 @@
             </div>
             <div class="clear"></div>
         </div>
-<script>
-function MM_over(mmObj) {
-    var mSubObj = mmObj.getElementsByTagName("div")[0];
-    mSubObj.style.display = "block";
-    mSubObj.style.backgroundColor = "#fff";
-}
-function MM_out(mmObj) {
-    var mSubObj = mmObj.getElementsByTagName("div")[0];
-    mSubObj.style.display = "none";
-    
-}
-</script>
     <div class="n-right left">
             <div class="n-right-top">
-                <div class="title left">预约挂号</div>
+                <div class="title left">医生介绍</div>
                 <div class="location right">
                     您现在的位置：<a href="/">医院首页</a><span> > </span>
                 </div>
                 <div class="clear"></div>
             </div>
             <div class="clear"></div>
-            <div class="n-right-about">
-                <div class="yy">
-                    <div class="yuyue-title">
-                            <img src="/images/2017051401.jpg">
+            <div class="n-right-about" style="padding-left: 0px;">
+                <div class="guahao-detail">
+                    <div class="guahao-doctor left">
+                        <?php if($doctor['thumb']){ ?>
+                        <img src="<?php echo $doctor['thumb']; ?>" />
+                        <?php } ?>
+                        <h2><?php echo $doctor['title']; ?></h2>
+                        <p>职称:主治医生</p>
+                        <p>科室：小儿科</p>
+                        <p>擅长：小儿神经系统疾病主要包括癫痫、儿童智力障碍各种神经遗传病。</p>
+                        <p>简介：常青,妇产科副主任，主任医师，教授。临床医学博士，从事妇产科临床工作近20年，有较丰富的临床经验。 门诊时间：每周一上午产科门诊， 每周三、五上午妇科门诊。常青,妇产科副主任，主任医师，教授。临床医学博士，从事妇产科临床工作近20年，有较丰富的临床经验。 </p>
+                        <div class="clear"></div>  
                     </div>
 
-                    <div class="guahao">
-                        <div class="title">出诊信息</div>
-                        <table border="1" width="98%" >
+                    <div class="guahao-chart right">
+                        <h2>最新预约</h2>
+                        <ul>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                            <li>郑女士<label>2017-03-20 （上午）</label></li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="guahao-time">
+                        <div class="table-title">选择就诊时间</div>
+                        <table border="1">
                             <tr>
-                                <td>科室</td>
                                 <td>时段</td>
                                 <?php if($week){ foreach($week as $key => $value){ ?>
                                 <td><?php echo $value['zh']; ?><br/><?php echo $value['data']; ?></td>
                                 <?php }} ?>
                             </tr>
-                            <?php if($keshi){ ?>
-                            <?php if($keshi){ foreach($keshi as $key => $value){ ?>
-
                             <tr>
-                                <td rowspan="3"><?php echo $value; ?></td>
                                 <td>上午</td>
-                                <?php if($week){ foreach($week as $k => $v){ ?>
+                                <?php if($week){ foreach($week as $key => $value){ ?>
                                 <td>
-                                <?php $ysTime = table('ys_time')->where(array('time'=>$v['time'][0]))->field('ys_id,stock')->find('array'); ?>
-                                    <?php if($ysTime){ foreach($ysTime as $kk => $vv){ ?>
-                                        <?php if(isset($doctor[$value][$vv['ys_id']])){ ?>
-                                        <div class="link" onmouseover="MM_over(this)" onmouseout="MM_out(this)">
-                                            <a href="javascript:;" class="btn-guahao" data-stock="<?php echo $vv['stock']; ?>">
-                                                <?php echo $doctor[$value][$vv['ys_id']]['title']; ?>
-                                            </a>
-                                            <div class="nr">
-                                            <a href="<?=url('detail',array('id'=>$doctor[$value][$vv['ys_id']]['id'],'catid'=>$catid))?>">
-                                                <img src="<?php echo $doctor[$value][$vv['ys_id']]['thumb']; ?>">
-                                            </a>
-                                            <h2>
-                                                <a href="<?=url('detail',array('id'=>$doctor[$value][$vv['ys_id']]['id'],'catid'=>$catid))?>"><?php echo $doctor[$value][$vv['ys_id']]['title']; ?></a>
-                                            </h2>
-                                            职　称：<span><?php echo $doctor[$value][$vv['ys_id']]['zc']; ?> </span><br>
-                                            专　长：<span><?php echo $doctor[$value][$vv['ys_id']]['like']; ?></span>
-                                            </div>
-                                        </div>
-                                        <?php } ?>
-                                    <?php }} ?>
-                                <?php }} ?>
+                                    <?php if(isset($doctor['time'][$value['time'][0]])){ ?>
+                                        <a href="<?=url('order_index',array('time'=>$value['unix'],'catid'=>$catid,'id'=>$doctor['time'][$value['time'][0]]['id']))?>" class="btn-guahao-detail">预约</a>
+                                    <?php } ?>
                                 </td>
+                                <?php }} ?>
                             </tr>
                             <tr>
                                 <td>下午</td>
-                                <?php if($week){ foreach($week as $k => $v){ ?>
+                                <?php if($week){ foreach($week as $key => $value){ ?>
                                 <td>
-                                <?php $ysTime = table('ys_time')->where(array('time'=>$v['time'][1]))->field('ys_id,stock')->find('array'); ?>
-                                    <?php if($ysTime){ foreach($ysTime as $kk => $vv){ ?>
-                                        <?php if(isset($doctor[$value][$vv['ys_id']])){ ?>
-                                        <div class="link" onmouseover="MM_over(this)" onmouseout="MM_out(this)">
-                                            <a href="javascript:;" class="btn-guahao" data-stock="<?php echo $vv['stock']; ?>">
-                                                <?php echo $doctor[$value][$vv['ys_id']]['title']; ?>
-                                            </a>
-                                            <div class="nr">
-                                            <a href="<?=url('detail',array('id'=>$doctor[$value][$vv['ys_id']]['id'],'catid'=>$catid))?>">
-                                                <img src="<?php echo $doctor[$value][$vv['ys_id']]['thumb']; ?>">
-                                            </a>
-                                            <h2>
-                                                <a href="<?=url('detail',array('id'=>$doctor[$value][$vv['ys_id']]['id'],'catid'=>$catid))?>"><?php echo $doctor[$value][$vv['ys_id']]['title']; ?></a>
-                                            </h2>
-                                            职　称：<span><?php echo $doctor[$value][$vv['ys_id']]['zc']; ?> </span><br>
-                                            专　长：<span><?php echo $doctor[$value][$vv['ys_id']]['like']; ?></span>
-                                            </div>
-                                        </div>
-                                        <?php } ?>
-                                    <?php }} ?>
-                                <?php }} ?>
+                                    <?php if(isset($doctor['time'][$value['time'][1]])){ ?>
+                                        <a href="<?=url('order_index',array('time'=>$value['unix'],'catid'=>$catid,'id'=>$doctor['time'][$value['time'][0]]['id']))?>" class="btn-guahao-detail">预约</a>                                    
+                                    <?php } ?>
                                 </td>
+                                <?php }} ?>
                             </tr>
                             <tr>
                                 <td>晚上</td>
-                                <?php if($week){ foreach($week as $k => $v){ ?>
+                                <?php if($week){ foreach($week as $key => $value){ ?>
                                 <td>
-                                <?php $ysTime = table('ys_time')->where(array('time'=>$v['time'][2]))->field('ys_id,stock')->find('array'); ?>
-                                    <?php if($ysTime){ foreach($ysTime as $kk => $vv){ ?>
-                                        <?php if(isset($doctor[$value][$vv['ys_id']])){ ?>
-                                        <div class="link" onmouseover="MM_over(this)" onmouseout="MM_out(this)">
-                                            <a href="javascript:;" class="btn-guahao" data-stock="<?php echo $vv['stock']; ?>">
-                                                <?php echo $doctor[$value][$vv['ys_id']]['title']; ?>
-                                            </a>
-                                            <div class="nr">
-                                            <a href="<?=url('detail',array('id'=>$doctor[$value][$vv['ys_id']]['id'],'catid'=>$catid))?>">
-                                                <img src="<?php echo $doctor[$value][$vv['ys_id']]['thumb']; ?>">
-                                            </a>
-                                            <h2>
-                                                <a href="<?=url('detail',array('id'=>$doctor[$value][$vv['ys_id']]['id'],'catid'=>$catid))?>"><?php echo $doctor[$value][$vv['ys_id']]['title']; ?></a>
-                                            </h2>
-                                            职　称：<span><?php echo $doctor[$value][$vv['ys_id']]['zc']; ?> </span><br>
-                                            专　长：<span><?php echo $doctor[$value][$vv['ys_id']]['like']; ?></span>
-                                            </div>
-                                        </div>
-                                        <?php } ?>
-                                    <?php }} ?>
-                                <?php }} ?>
+                                    <?php if(isset($doctor['time'][$value['time'][2]])){ ?>
+                                        <a href="<?=url('order_index',array('time'=>$value['unix'],'catid'=>$catid,'id'=>$doctor['time'][$value['time'][0]]['id']))?>" class="btn-guahao-detail">预约</a>                                    
+                                    <?php } ?>
                                 </td>
+                                <?php }} ?>
                             </tr>
-                            <?php }} ?>
-                            <?php } ?>
                         </table>
                     </div>
                 </div>
