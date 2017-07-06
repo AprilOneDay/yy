@@ -1,4 +1,5 @@
 <?php
+namespace Denha;
 
 /**
  * 我的文件上传类

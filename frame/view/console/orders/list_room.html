@@ -31,17 +31,12 @@
                                 <option value="0">待审核</option>
                                 <option value="1">已审核</option>
                             </select>
-                            <select class="form-control" name="yeard" data-selected="<?=$yeard?>">
-                                <option value="">全部年份</option>
-                                <?php foreach($yearCopy as $key => $value){ ?>
-                                    <option value="<?=$value?>" ><?=$value?></option>   
-                                <?php }?>
-                            </select>
                             <select class="form-control" name="field" data-selected="<?=$field?>">
                                 <option value="">请选择搜索条件</option>
+                                <option value="order_sn">订单编号</option>
                                 <option value="name">姓名</option>
-                                <option value="yy">医院名称</option>
-                                <option value="kc">课程名称</option>
+                                <option value="code">身份证</option>
+                                <option value="hospital">医院名称</option>
                             </select>
                             <input type="text" class="form-control w120" placeholder="Search" name="keyword" value="<?=$keyword?>">
                             <button type="submit" class="btn btn-default">搜索</button>
@@ -57,14 +52,16 @@
                             <tr>
                                 <th><input type="checkbox" id="allCheckbox"></th>
                                 <th>id</th>
+                                <th>订单编号</th>
                                 <th>姓名</th>
-                                <th>医院</th>
-                                <th>课程</th>
-                                <th>类型</th>
+                                <th>入住天数</th>
+                                <th>手机号</th>
                                 <th>学分</th>
-                                <th>申请状态</th>
-                                <th>通过状态</th>
-                                <th>考试时间</th>
+                                <th>订单状态</th>
+                                <th>订单流程</th>
+                                <th>下单时间</th>
+                                <th>入住时间</th>
+                                <th>订单金额</th>
                                 <th>操作</th>
                             </tr>
                         </thead>

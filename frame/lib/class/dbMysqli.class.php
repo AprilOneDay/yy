@@ -1,4 +1,6 @@
 ﻿<?php
+namespace Denha;
+
 class dbMysqli
 {
 

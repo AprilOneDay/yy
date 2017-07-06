@@ -1,4 +1,6 @@
 <?php
+namespace Controller;
+
 class User extends base
 {
     public function index()

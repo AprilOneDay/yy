@@ -1,4 +1,6 @@
 <?php
+namespace Denha;
+
 //验证码类
 class validateCode
 {

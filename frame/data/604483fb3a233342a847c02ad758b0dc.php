@@ -155,7 +155,7 @@
              					<th>验证码</th>
              					<td>
                                     <input type="text" name="verification" placeholder="请输入验证码">
-                                    <input type="button" value="获取验证码"></input>
+                                    <input type="button" value="获取验证码" class="send-verification"></input>
                                 </td>
              				</tr>
              			</table>

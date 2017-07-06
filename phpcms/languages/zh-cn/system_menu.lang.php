@@ -455,4 +455,9 @@ $LANG['complete_info'] = '填写资料';
 $LANG['clear_data'] = '一键清理';
 $LANG['player_manage'] = '播放器管理';
 $LANG['video_upload'] = '视频上传'; 
+$LANG['1'] = '预约管理';
+$LANG['dd'] = '订单管理';
+$LANG['dd'] = '订单管理';
+$LANG['bf'] = '病房预约';
+$LANG['bf'] = '挂号预约';
 ?>

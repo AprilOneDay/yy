@@ -1,9 +1,17 @@
 <?php
-//学分处理API
-class Credit extends base
+namespace Controller;
+
+//订单列表
+class Orders extends base
 {
 
-    public function lists()
+    /**
+     * 预约病房订单列表
+     * @date   2017-07-06T11:23:18+0800
+     * @author ChenMingjiang
+     * @return [type]                   [description]
+     */
+    public function listHospital()
     {
         $page = new page();
 
@@ -39,7 +47,7 @@ class Credit extends base
             $param['keyword'] = $keyword;
         }
 
-        $yearCopy = table('cqks_credit', false)->group('yeard')->field('yeard')->find('one', true);
+        $m
 
         $total = table('cqks_credit', false)->where($map)->count();
         $page->pages($total, $pageNo, $pageSize, url('lists', $param), 5);

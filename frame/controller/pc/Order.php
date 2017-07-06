@@ -1,4 +1,6 @@
 <?php
+namespace Controller;
+
 class Order extends Init
 {
     public function index()

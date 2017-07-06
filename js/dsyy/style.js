@@ -9,6 +9,7 @@ $(document).ready(function() {
 		}
 	});
 
+	//保存病房信息
 	$(".saveYuyueOrder").click(function(){
 		var data = $('form').serialize();
 		layer.load();
@@ -23,6 +24,7 @@ $(document).ready(function() {
 		console.log(data);
 	});
 
+	//保存挂号信息
 	$(".saveGuahaoOrder").click(function(){
 		var data = $('form').serialize();
 		layer.load();
@@ -36,6 +38,7 @@ $(document).ready(function() {
 		},'json');
 	});
 
+	//跳转挂号信息
 	$('.btn-guahao').click(function(){
 		var stock = $(this).attr('data-stock'); //剩余预约号数
 		var href  = $(this).attr('data-href'); //跳转地址
@@ -48,6 +51,16 @@ $(document).ready(function() {
 			window.location.href = href;
 		});
 	});
+
+	//发送验证码
+	$('.send-verification').click(function(){
+		var mobile = $("input[name='mobile']").val();
+		layer.load();
+		$.post('/frame/index.php?m=api&c=sms&a=send',{flag:'verification',mobile:mobile},function(result){
+			layer.closeAll('loading');
+			layer.msg(result.msg);
+		},'json');
+	})
 })
 
 

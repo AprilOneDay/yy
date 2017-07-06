@@ -1,4 +1,6 @@
 <?php
+namespace Controller;
+
 class Hospital extends Init
 {
 
@@ -92,6 +94,17 @@ class Hospital extends Init
 
         $room = table('room')->field('title,area,price,bed,wifi,num,floor')->where(array('id' => $id))->find();
         if (!$room) {
+            $this->ajaxReturn(array('status' => false, 'msg' => '未查询到相关病房,请刷新重试'));
+        }
+
+        $roomData = table('room_data')->where(array('id' => $id))->field('keshi,hospital')->find();
+        if (!$roomData) {
+            $this->ajaxReturn(array('status' => false, 'msg' => '未查询到相关医院信息,请刷新重试'));
+        }
+
+        //医院名称
+        $hospital = table('category')->where(array('catid' => $roomData['hospital']))->field('catname')->find('one');
+        if (!$room) {
             $this->ajaxReturn(array('status' => false, 'msg' => '预约失败,请刷新重试'));
         }
         //取微秒
@@ -110,6 +123,7 @@ class Hospital extends Init
         $dataInfo['start_time'] = strtotime(trim($timeArr[0]));
         $dataInfo['end_time']   = strtotime(trim($timeArr[1]));
         $dataInfo['room_id']    = $id;
+        $dataInfo['hospital']   = $hospital;
         $dataInfo['name']       = $room['title'];
         $dataInfo['area']       = $room['area'];
         $dataInfo['bed']        = $room['bed'];

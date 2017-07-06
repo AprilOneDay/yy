@@ -1,4 +1,6 @@
 <?php
+namespace Denha;
+
 class LOAD
 {
     public $model;
@@ -22,16 +24,6 @@ class LOAD
         }
     }
 
-    public static function loadDao($name)
-    {
-        $filename = DAO_PATH . $name . ".php";
-        if (is_file($filename)) {
-            return include_once $filename;
-        } else {
-            //die('Dao模块：' . $filename . '不存在');
-        }
-    }
-
     public static function loadController($name)
     {
         $model    = isset($_GET['m']) ? get('m', 'trim') : ''; //項目文件
@@ -44,6 +36,16 @@ class LOAD
             return include_once $filename;
         } else {
             //die('Controller模块：' . $filename . '不存在');
+        }
+    }
+
+    public static function loadDao($name)
+    {
+        $filename = DAO_PATH . $name . ".php";
+        if (is_file($filename)) {
+            return include_once $filename;
+        } else {
+            //die('Dao模块：' . $filename . '不存在');
         }
     }
 
