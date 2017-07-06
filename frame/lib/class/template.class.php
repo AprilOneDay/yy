@@ -1,6 +1,4 @@
 <?php
-namespace Denha;
-
 class template
 {
     public $stampLeft  = '{';

@@ -1,6 +1,4 @@
 <?php
-namespace Controller;
-
 class Init extends base
 {
     public $templateList;

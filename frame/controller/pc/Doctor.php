@@ -1,6 +1,4 @@
 <?php
-namespace Controller;
-
 class Doctor extends Init
 {
     public function index()

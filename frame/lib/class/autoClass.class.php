@@ -1,6 +1,4 @@
 <?php
-namespace Denha;
-
 class LOAD
 {
     public $model;
@@ -16,11 +14,22 @@ class LOAD
 
     public static function loadClass($name)
     {
-        $filename = FRAME_LIB_CLASS_PATH . $name . ".class.php";
+        $name     = explode('\\', $name);
+        $filename = FRAME_LIB_CLASS_PATH . end($name) . ".class.php";
         if (is_file($filename)) {
             return include_once $filename;
         } else {
             //print('Class模块：' . $filename . '不存在');
+        }
+    }
+
+    public static function loadDao($name)
+    {
+        $filename = DAO_PATH . $name . ".php";
+        if (is_file($filename)) {
+            return include_once $filename;
+        } else {
+            //print_r('Dao模块：' . $filename . '不存在');
         }
     }
 
@@ -36,16 +45,6 @@ class LOAD
             return include_once $filename;
         } else {
             //die('Controller模块：' . $filename . '不存在');
-        }
-    }
-
-    public static function loadDao($name)
-    {
-        $filename = DAO_PATH . $name . ".php";
-        if (is_file($filename)) {
-            return include_once $filename;
-        } else {
-            //die('Dao模块：' . $filename . '不存在');
         }
     }
 

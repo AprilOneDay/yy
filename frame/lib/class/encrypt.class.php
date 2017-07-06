@@ -1,6 +1,4 @@
 <?php
-namespace Denha;
-
 //加密类
 class encrypt
 {

@@ -1,6 +1,4 @@
 <?php
-namespace Controller;
-
 class Pay extends Init
 {
     public function index()

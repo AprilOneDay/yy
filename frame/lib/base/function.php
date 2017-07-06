@@ -143,7 +143,8 @@ function table($name, $isTablepre = true)
 function dao($name)
 {
     if (class_exists($name)) {
-        $dao = new $name();
+        $dao = 'Dao\\' . $name;
+        $dao = new $dao();
         return $dao;
     }
 
