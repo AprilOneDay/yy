@@ -5,15 +5,15 @@ class Sms extends base
 {
     public function send()
     {
-        $moblie = post('moblie', 'trim');
+        $mobile = post('mobile', 'trim');
         $flag   = post('flag', 'trim');
 
-        $reslut = dao('Sms')->send($moblie, $flag);
+        $reslut = dao('Sms')->send($mobile, $flag);
         if ($reslut['status']) {
             $this->ajaxReturn(array('status' => true, 'msg' => '发送成功'));
         }
 
-        $this->ajaxReturn(array('status' => false, 'msg' => $reslut['msg']));
+        $this->ajaxReturn($reslut);
 
     }
 }

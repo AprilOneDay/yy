@@ -19,10 +19,12 @@ class Sms
 
         $url  = $config['url'];
         $data = array(
-            'CorpID'  => $config['username'],
-            'Pwd'     => 'password',
-            'Content' => $content,
-            'Mobile'  => $moblie,
+            'CorpID'   => $config['username'],
+            'Pwd'      => $config['password'],
+            'Content'  => $content,
+            'Mobile'   => $moblie,
+            'Cell'     => '',
+            'SendTime' => '',
         );
 
         $curl = curl_init();
@@ -34,16 +36,16 @@ class Sms
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         //设置post方式提交
         curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         //执行命令
-        $reslut = curl_exec($curl);
+        $result = curl_exec($curl);
         //关闭URL请求
         curl_close($curl);
-        if ($reslut) {
+        if ($result) {
             return array('status' => true, 'msg' => '发送成功');
         }
 
-        return array('status' => false, 'msg' => '发送失败');
+        return array('status' => false, 'msg' => $data, 'result' => $result);
     }
 
     private function smsTemplate($flag = '', $data = '', $moblie = '')
@@ -51,9 +53,10 @@ class Sms
         $content = '';
         switch ($flag) {
             case 'verification':
+                $verification = rand('11111', '99999');
                 session('verificationMoblie', $moblie); //保存手机号
-                $verification = session('verification', rand('11111', '99999')); //保存验证码
-                $content      = '验证码：' . $verification . '您正在使用医院预约系统';
+                session('verification', $verification); //保存验证码
+                $content = '验证码：' . $verification . '您正在使用医院预约系统';
                 break;
             default:
                 # code...

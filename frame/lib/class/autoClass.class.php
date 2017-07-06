@@ -25,7 +25,8 @@ class LOAD
 
     public static function loadDao($name)
     {
-        $filename = DAO_PATH . $name . ".php";
+        $name     = explode('\\', $name);
+        $filename = DAO_PATH . end($name) . ".php";
         if (is_file($filename)) {
             return include_once $filename;
         } else {
@@ -35,10 +36,11 @@ class LOAD
 
     public static function loadController($name)
     {
+        $name     = explode('\\', $name);
         $model    = isset($_GET['m']) ? get('m', 'trim') : ''; //項目文件
-        $filename = CONTROLLER_PATH . $name . ".php";
+        $filename = CONTROLLER_PATH . end($name) . ".php";
         if ($model) {
-            $filename = CONTROLLER_PATH . $model . '/' . $name . ".php";
+            $filename = CONTROLLER_PATH . $model . '/' . end($name) . ".php";
         }
 
         if (is_file($filename)) {
