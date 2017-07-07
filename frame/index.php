@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('PRC');
 defined('PATH') or define('PATH', $_SERVER['DOCUMENT_ROOT']); // 系统更目录
 defined('FRAME_PATH') or define('FRAME_PATH', PATH . '/frame/'); // 框架根目录
 defined('FRAME_LIB_PATH') or define('FRAME_LIB_PATH', FRAME_PATH . '/lib/'); // 框架视核心目录

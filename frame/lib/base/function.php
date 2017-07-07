@@ -190,12 +190,35 @@ function url($location = '', $params = array())
 }
 
 //保存Cookie
-function cookie($name = '', $value = '', $expire = '86400')
+function cookie($name = '', $value = '', $expire = '86400', $encode = false)
 {
     if (!$name) {
         return false;
     }
+
+    //加密
+    $value = $encode ? auth($value) : $value;
+
     setcookie($name, $value, time() + $expire, '/');
+
+}
+
+//获取Cookie
+function getCookie($name, $encode = false)
+{
+    $data = '';
+    if (isset($_COOKIE[$name])) {
+        $data = $_COOKIE[$name];
+        if (is_array($data)) {
+            foreach ($data as $key => $value) {
+                $data[$key] = $encode ? auth($value, 'DECODE') : $value;
+            }
+        } else {
+            $data = $encode ? auth($data, 'DECODE') : $data;
+        }
+    }
+
+    return $data;
 }
 
 //保存Session

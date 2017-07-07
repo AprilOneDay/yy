@@ -9,11 +9,6 @@ class Sms extends base
         $flag   = post('flag', 'trim');
 
         $reslut = dao('Sms')->send($mobile, $flag);
-        if ($reslut['status']) {
-            $this->ajaxReturn(array('status' => true, 'msg' => '发送成功'));
-        }
-
         $this->ajaxReturn($reslut);
-
     }
 }
