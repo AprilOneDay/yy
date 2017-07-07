@@ -59,6 +59,9 @@ $(document).ready(function() {
 		$.post('/frame/index.php?m=api&c=sms&a=send',{flag:'verification',mobile:mobile},function(result){
 			layer.closeAll('loading');
 			layer.msg(result.msg);
+			if(result.status){
+				
+			}
 		},'json');
 	})
 })
