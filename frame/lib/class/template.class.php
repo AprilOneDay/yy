@@ -95,6 +95,7 @@ class template
 
     public function stampVar()
     {
+        //{$xxx}
         $regular = '/' . $this->stampLeft . '\$(.*?)' . $this->stampRight . '/is';
         preg_match_all($regular, $this->content, $matches);
         if ($matches) {
@@ -103,6 +104,17 @@ class template
                 $this->content = str_replace($matches[0][$key], '<?php echo $' . $matches[1][$key] . '; ?>', $this->content);
             }
         }
+
+        //{??$xx}
+        $regular2 = '#' . $this->stampLeft . '\?\?(.*?)' . $this->stampRight . '#is';
+        preg_match_all($regular2, $this->content, $matches2);
+        if ($matches2) {
+            foreach ($matches2[0] as $key => $value) {
+                //替换模板变量
+                $this->content = str_replace($matches2[0][$key], '<?php echo isset(' . $matches2[1][$key] . ') ? ' . $matches2[1][$key] . ' : \'\'; ?>', $this->content);
+            }
+        }
+
     }
 
     public function stampForeach()

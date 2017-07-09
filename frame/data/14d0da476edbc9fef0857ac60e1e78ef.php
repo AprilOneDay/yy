@@ -87,85 +87,81 @@
         </div>
     <div class="n-right left">
             <div class="n-right-top">
-                <div class="title left">预约挂号</div>
+                <div class="title left">查询结果</div>
                 <div class="location right">
-                    您现在的位置：<a href="/">医院首页</a><span> > </span>
+                    您现在的位置：<a href="/">医院首页</a><a href="<?=url('list_doctor',array('name'=>$orders['name'],'code'=>$orders['code'],'mobile'=>$orders['mobile'],'catid'=>$catid))?>"> >返回订单列表 </a>
                 </div>
                 <div class="clear"></div>
             </div>
             <div class="clear"></div>
-         	<div class="n-right-about">
-         		<div class="yy">
-         			<div class="yuyue-title">
-      						<img src="/images/2017050604.jpg">
-         			</div>
-
-         			<div class="from">
-         			<span>预约确认与输入个人信息</span>
-         			<table border="1" width="98%"  class="order-info">
-         				<tr>
-         					<th>挂号科室</th>
-         					<td><?php echo $data['doctor']['keshi']; ?></td>
-         				</tr>
-         				<tr>
-         					<th>医生</th>
-         					<td><?php echo $data['doctor']['title']; ?></td>
-         				</tr>
-         				<tr>
-         					<th>就诊时间</th>
-         					<td><?php echo $data['time']; ?></td>
-         				</tr>
-         				<tr>
-         					<th>费用</th>
-         					<td>￥<?php echo $data['doctor']['price']; ?></td>
-         				</tr>
-         			</table>
+            <div class="n-right-about">
+                <div class="yy">
+                
+                    <div class="from">
+                    <span>预约确认与输入个人信息</span>
+                    <table border="1" width="98%"  class="order-info">
+                        <tr>
+                            <th>订单编号</th>
+                            <td><?php echo $orders['order_sn']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>挂号科室</th>
+                            <td><?php echo $orders['doctor']['keshi']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>医生</th>
+                            <td><?php echo $orders['doctor']['doctor']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>就诊时间</th>
+                            <td><?php echo $orders['doctor']['time_copy']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>费用</th>
+                            <td>￥<?php echo $orders['amount']; ?></td>
+                        </tr>
+                    </table>
                     <form method="post">
-             			<table border="1" width="98%" class="order-index">
+                        <table border="1" width="98%" class="order-index">
                             <input type="hidden" name="catid" value="<?php echo $catid; ?>">
                             <input type="hidden" name="time_copy"  value="<?php echo $data['time']; ?>">
                             <input type="hidden" name="ys_time_id" value="<?php echo $data['id']; ?>">
                             <input type="hidden" name="guahao_time" value="<?php echo $data['unix']; ?>">
-    						<tr>
-             					<th>患者姓名</th>
-             					<td>
-                                    <input type="text" name="name" placeholder="请输入患者真实姓名">
-                                    <p><i>*</i> 医院需要您提供就诊者的真实姓名</p>
+                            <tr>
+                                <th>患者姓名</th>
+                                <td>
+                                    <p><?php echo $orders['name']; ?></p>
                                 </td>
-             				</tr>
-             				<tr>
-             					<th>身份证号</th>
-             					<td>
-                                    <input type="text" name="code" placeholder="请输入患者真实身份证号"> 
-                                    <p><i>*</i> 身份证是您的取号凭证，身份证号码输入错误将无法取号！</p>
+                            </tr>
+                            <tr>
+                                <th>身份证号</th>
+                                <td>
+                                    <p><?php echo $orders['code']; ?></p>
                                 </td>
-             				</tr>
-             				<tr>
-             					<th>家庭住址</th>
-             					<td><input type="text" name="address" placeholder="请输入家庭地址"> </td>
-             				</tr>
-             				<tr>
-             					<th>手机号</th>
-             					<td>
-                                    <input type="text" name="mobile" placeholder="请输入手机号">
-                                    <p><i>*</i> 此手机号将接收预约挂号成功与否的反馈信息，没有费用的产生。</p>
+                            </tr>
+                            <?php if($orders['doctor']['address']){ ?>
+                            <tr>
+                                <th>家庭住址</th>
+                                <td>
+                                <p><?php echo $orders['doctor']['address']; ?></p>
                                 </td>
-             				</tr>
-             				<tr>
-             					<th>验证码</th>
-             					<td>
-                                    <input type="text" name="verification" placeholder="请输入验证码">
-                                    <input type="button" value="获取验证码" class="send-verification"></input>
+                            </tr>
+                            <?php } ?>
+                            <tr>
+                                <th>手机号</th>
+                                <td>
+                                   <p><?php echo $orders['mobile']; ?></p>
                                 </td>
-             				</tr>
-             			</table>
+                            </tr>
+                        </table>
+                            <?php if($orders['logistics_status'] == 1){ ?>
                             <div class="complay">
-                                <input type="button" value="返回上一页" style="background: #b2b2b2;"></input>
-                                <input type="button" value="预约确认" class="saveGuahaoOrder"></input>
+                                <input type="button" value="申请退号" order_sn="<?php echo $orders['order_sn']; ?>" class="btn-backDoctor"></input>
                             </div>
-             			</div>
+                            <?php } ?>
+                        </div>
                     </form>
-         		</div>
+                </div>
             </div>
         </div>
         <div class="clear"></div>

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -75,16 +76,16 @@
                     <?php
                     $category = table('category')->where(array('parentid' => 7))->field('model,controller,action,catid,catname,arrchildid,url')->find('array');
                     ?>
-                    <?php foreach($category as $k => $r){ ?>
+                    <?php if($category){ foreach($category as $k => $r){ ?>
                     <li <?php if($r['catid'] == $catid){ ?>class="curr"<?php } ?> >
                         <a href="/frame/index.php?m=<?php echo $r['model']; ?>&c=<?php echo $r['controller']; ?>&a=<?php echo $r['action']; ?>&catid=<?php echo $r['catid']; ?>"><?php echo $r['catname']; ?><b>></b></a>
                     </li>
-                    <?php } ?>
+                    <?php }} ?>
                 </ul>
             </div>
             <div class="clear"></div>
         </div>
-        <div class="n-right left">
+    <div class="n-right left">
             <div class="n-right-top">
                 <div class="title left">预约病房</div>
                 <div class="location right">
@@ -188,3 +189,5 @@
         </div>
     </div>
 </footer>
+</body>
+</html>

@@ -1,9 +1,93 @@
 <?php
-namespace Controller;
-
 //订单列表
 class Orders extends base
 {
+
+    /**
+     * 预约挂号订单列表
+     * @date   2017-07-09T16:40:10+0800
+     * @author ChenMingjiang
+     * @return [type]                   [description]
+     */
+    public function listDoctor()
+    {
+        $pageNo   = get('pageNo', 'intval', 1);
+        $pageSize = get('pageSize', 'intval', 100);
+        $field    = get('field', 'text', '');
+        $keyword  = get('keyword', 'text', '');
+
+        $offer         = ($pageNo - 1) * $pageSize;
+        $statusCopy    = array('0' => '待审核', '1' => '已审核');
+        $logisticsCopy = array('1' => '待处理', '2' => '待接见', '3' => '已完成', '4' => '已退款');
+
+        $to = table('orders')->tableName();
+        $td = table('orders_doctor')->tableName();
+
+        $param = array();
+
+        if ($field && $keyword) {
+            if ($field == 'order_sn') {
+                $map[$to . '.order_sn'] = $keyword;
+            }
+
+            $param['field']   = $field;
+            $param['keyword'] = $keyword;
+        }
+
+        $map[$to . '.type'] = 2;
+
+        $total = table('orders')->join($td, "$to.order_sn = $td.order_sn", 'left')->where($map)->count();
+        $page  = new page();
+        $page->pages($total, $pageNo, $pageSize, url('list_doctor', $param), 5);
+        $loadPage = $page->loadConsole();
+
+        $list = table('orders')->join($td, "$to.order_sn = $td.order_sn", 'left')->where($map)->limit($offer, $pageSize)->find('array');
+        if ($list) {
+            foreach ($list as $key => $value) {
+                $list[$key]['data'] = table('orders_doctor')->where(array('order_sn' => $value['order_sn']))->field('doctor,keshi,time_copy,hospital,address')->find();
+
+            }
+        }
+
+        $this->assign('statusCopy', $statusCopy);
+        $this->assign('logisticsCopy', $logisticsCopy);
+
+        $this->assign('param', $param);
+        $this->assign('list', $list);
+        $this->assign('pages', $loadPage);
+        $this->show('/console/orders/list_doctor');
+    }
+
+    /**
+     * 挂号预约详情
+     * @date   2017-07-09T11:39:33+0800
+     * @author ChenMingjiang
+     * @return [type]                   [description]
+     */
+    public function detailDoctor()
+    {
+
+        $orderSn = get('order_sn', 'trim');
+
+        if (!$orderSn) {
+            die('提交信息有误');
+        }
+
+        $map['type']     = 2;
+        $map['order_sn'] = $orderSn;
+
+        $orders = table('orders')->where($map)->field('order_sn,name,mobile,code,amount,logistics_status')->find();
+        if (!$orders) {
+            die('未查询相关信息');
+        }
+
+        $orders['data'] = table('orders_doctor')->where(array('order_sn' => $orders['order_sn']))->field('doctor,keshi,time_copy,address,hospital')->find();
+
+        $this->assign('orders', $orders);
+
+        $this->show('/console/orders/detail_doctor');
+
+    }
 
     /**
      * 预约病房订单列表
@@ -47,8 +131,6 @@ class Orders extends base
             $param['keyword'] = $keyword;
         }
 
-        $m
-
         $total = table('cqks_credit', false)->where($map)->count();
         $page->pages($total, $pageNo, $pageSize, url('lists', $param), 5);
         $loadPage = $page->loadConsole();
@@ -77,121 +159,6 @@ class Orders extends base
         $this->assign('list', $list);
         $this->assign('pages', $loadPage);
         $this->show('/console/credit/list');
-    }
-
-    /**
-     * 申请学分
-     * @date   2017-06-14T16:55:30+0800
-     * @author ChenMingjiang
-     * @return [type]                   [description]
-     */
-    public function applyCredit()
-    {
-        $id = get('id', 'intval', 0);
-
-        $map['id'] = $id;
-
-        $credit = table('cqks_credit', false)->where($map)->find();
-        if (!$credit) {
-            $this->ajaxReturn(array('status' => false, 'msg' => '信息不存在'));
-        }
-
-        //I类学分申请
-        if ($credit['type'] == 1) {
-            $user = table('cqks_yh', false)->where(array('bh' => $credit['uid']))->field('sfz,xm')->find();
-            if (!$user) {
-                $this->ajaxReturn(array('status' => false, 'msg' => '用户信息不存在'));
-            }
-
-            $data['ID']    = $user['sfz'];
-            $data['Name']  = $user['xm'];
-            $data['Code']  = $credit['code'];
-            $data['Timer'] = time();
-
-            $encrypt = new encrypt();
-            $json    = $encrypt->base64Encrypt($data, 'PKCS7');
-
-            $resultContent = file_get_contents('http://cqjlp.91huayi.com/cme/applycertificate.aspx?params=' . $json);
-            $result        = json_decode($resultContent, true);
-
-            //更新学分
-            if ($result['Status']) {
-                table('cqks_credit', false)->where($map)->save(array('is_apply' => 1));
-                $this->ajaxReturn(array('status' => true, 'msg' => $result['Msg']));
-            }
-
-            $this->ajaxReturn(array('status' => false, 'msg' => $result['Msg']));
-        }
-        //II类学分
-        else {
-            if ($credit['status'] == 0) {
-                $this->ajaxReturn(array('status' => false, 'msg' => '该学生考试未通过无法审核'));
-            }
-
-            $user = table('cqks_yh', false)->where(array('bh' => $credit['uid']))->field('sfz,xm')->find();
-            if (!$user) {
-                $this->ajaxReturn(array('status' => false, 'msg' => '用户信息不存在'));
-            }
-
-            //更新学分
-            $result = table('cqks_credit', false)->where($map)->save(array('is_apply' => 1));
-            if ($result) {
-                $this->ajaxReturn(array('status' => true, 'msg' => '更新成功'));
-            }
-
-            $this->ajaxReturn(array('status' => false, 'msg' => '更新失败'));
-        }
-
-    }
-
-    public function batchApplyCredit()
-    {
-        $idArr = post('id', 'json', '');
-        if (!$idArr) {
-            $this->ajaxReturn(array('status' => false, 'msg' => '请选择需要审核的信息'));
-        }
-
-        //更新II类学分
-        $listTwo = table('cqks_credit', false)->where(array('type' => 2, 'status' => 1, 'id' => array('in', implode(',', $idArr))))->field('id')->find('one', true);
-
-        if ($listTwo) {
-            $reslut = table('cqks_credit', false)->where(array('type' => 2, 'status' => 1, 'id' => array('in', implode(',', $idArr))))->save(array('is_apply' => 1));
-
-            //剔除已更新学分
-            foreach ($idArr as $key => $value) {
-                if (in_array($value, $listTwo)) {
-                    unset($idArr[$key]);
-                }
-            }
-        }
-
-        //更新I类学分
-        $listOne = table('cqks_credit', false)->where(array('type' => 1, 'id' => array('in', implode(',', $idArr))))->field('id,code,uid')->find('array');
-
-        if ($listOne) {
-            $encrypt = new encrypt();
-            foreach ($listOne as $key => $value) {
-                $user = table('cqks_yh', false)->where(array('bh' => $value['uid']))->field('sfz,xm')->find();
-                if ($user) {
-                    $data['ID']    = $user['sfz'];
-                    $data['Name']  = $user['xm'];
-                    $data['Code']  = $value['code'];
-                    $data['Timer'] = time();
-
-                    $json          = $encrypt->base64Encrypt($data, 'PKCS7');
-                    $resultContent = file_get_contents('http://cqjlp.91huayi.com/cme/applycertificate.aspx?params=' . $json);
-                    $result        = json_decode($resultContent, true);
-
-                    //更新学分
-                    if ($result['Status']) {
-                        table('cqks_credit', false)->where(array('id' => $value['id']))->save(array('is_apply' => 1));
-                    }
-                }
-            }
-        }
-
-        $this->ajaxReturn(array('status' => true, 'msg' => '批量更新完成'));
-
     }
 
     public function updateCredit()

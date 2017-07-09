@@ -339,10 +339,22 @@ footer{ background: #383838; margin-top: 20px;}
 .guahao-time table{ width: 100%; border: #ececec 1px solid; text-align: center; }
 .guahao-time table td{ height: 50px; }
 
+.guahao-list{border: 1px solid #ccc; width: 900px; margin-top: 25px; }
+.guahao-list span{ display: block;  padding-left: 30px; line-height: 30px; }
+.guahao-list th{ text-align: center; line-height: 30px; color: #8f8f8f; font-weight: 500;}
+.guahao-list .btn-guahao-detail{  display: block; background: #36c98e;  width: 80px; text-align: center; border-radius: 5px; line-height: 40px;  }
+.guahao-list .btn-guahao-detail:hover{ background: red; }
+
 .btn-guahao-detail{ display: block; width: 65px; margin: 0 auto; color: #fff; border-radius: 5px; border: none; line-height: 30px; background: #0dbb7c; cursor: pointer; }
 .btn-guahao-detail:hover{ background: red; }
 .disabled{ background: #ccc; }
 .disabled:hover{ background: #ccc;  }
+
+.chaxun-from{ width: 500px; margin: 0 auto; margin-top: 30px; }
+.chaxun-from input[type='text']{ width: 275px; border: 1px solid #ccc; line-height: 35px; padding-left: 15px; margin-left: 20px; }
+.chaxun-from tr{ height: 60px; }
+.btn-chaxun{ width: 120px; margin: 0 auto; background: #0dbb7c; border: none; border-radius:5px; line-height: 35px; color:#fff; display: block; cursor: pointer; }
+.btn-chaxun:hover{ background: red; }
 
 .link{position:relative;}
 .link .btn-guahao{display: block;line-height: 30px;}
@@ -350,20 +362,7 @@ footer{ background: #383838; margin-top: 20px;}
 .nr img{float: left; margin: 0 10px 0 0; width:99px; height:134px; line-height:20px; }
 .nr h2{ margin: 0;padding: 0;font-size: 12px;font-weight: normal;}
 
-/*弹出层*/
-.tw{ padding-left:20px; padding-right:20px; line-height:25px; background:#0FF; cursor:pointer;}
-.tw:hover{ background:red; color:#fff;}
-.float-tc{ width:457px; position:fixed; border:1px solid #fff; top:0%; left:50%; margin-left:-238px; background:#fff;}
-.float-tc-title{ width:437px; height:45px; font-size:21px; line-height:45px; background:url(/images/float-bg.jpg) repeat-x; color:#fff; padding-left:20px; }
-.float-tc-title span{ float:right; margin-top:15px; margin-right:15px; cursor:pointer;}
-.float-tc-content{ width:456px; max-height:500px; overflow:auto;}
-.float-tc-content li{ float:left; border:1px solid #e1e1e1; min-height:40px; margin-top:20px; margin-left:40px; width:376px; line-height:40px; color:#7c7c7c; padding-left:10px;}
-.float-tc-content li label{ border-right:1px solid #7c7c7c; padding-right:10px; width:50px; text-align:center;}
-.float-tc-content li input{ width:300px; padding-left:10px; border:none; background-image:none; height:auto; margin:0px;}
-.float-tc-content li select{ width:300px;}
-.float-tc-content li textarea{ font-size:12px; min-height:195px; width:366px; border:none; padding-top:10px;}
-.float-sub{ margin-top:20px; margin-left:40px; cursor:pointer;} 
-.float-tc-content li p{ display:inline-block; padding-left:20px; line-height:40px;}
+
 
 .prenext{width:auto; height:25px; margin:20px auto;}
 #prenext li {float:left; _width:45px; _text-align:center; height:19px; margin-left:3px; line-height:21px;  border:1px solid #999; }

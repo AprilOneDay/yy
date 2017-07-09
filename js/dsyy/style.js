@@ -52,6 +52,20 @@ $(document).ready(function() {
 		});
 	});
 
+	//查询挂号
+	$('.btn-chaxun').click(function(){
+		var data = $('form').serialize();
+		layer.load();
+		$.get('/frame/index.php?m=pc&c=order&a=get_detail_doctor&'+data,function(result){
+			layer.closeAll('loading');
+			if(result.status){
+				window.location.href = '/frame/index.php?m=pc&c=order&a=list_doctor&'+data;
+			}else{
+				layer.msg(result.msg);
+			}
+		},'json');
+	});
+
 	//发送验证码
 	$('.send-verification').click(function(){
 		var mobile = $("input[name='mobile']").val();
