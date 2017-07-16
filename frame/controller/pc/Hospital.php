@@ -15,8 +15,12 @@ class Hospital extends Init
         $room         = table('room')->tableName();
         $roomData     = table('room_data')->tableName();
 
-        $field = "$room.id as id,$room.thumb,$room.description,$room.stock,$room.num,$room.room_type,$room.wifi,$room.bed,$room.price,$room.area,$room.title,$roomData.album";
+        $field = "$room.id as id,$room.thumb,$room.description,$room.stock,$room.num,$room.room_type,$room.wifi,$room.floor,$room.bed,$room.price,$room.area,$room.title,$roomData.album";
         $list  = table('room')->join($roomData, "$room.id = $roomData.id", 'left')->where(array($roomData . '.hospital' => $topCatid))->field($field)->find('array');
+
+        foreach ($list as $key => $value) {
+            $list[$key]['album'] = json_decode($value['album'], true);
+        }
 
         $this->assign('catid', $catid);
         $this->assign('list', $list);

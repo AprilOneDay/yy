@@ -118,7 +118,7 @@
 							<tr style="text-align: center;height: 110px;">
 								<td class="title-pic"> 
 									<img src="<?php echo $value['thumb']; ?>" width="110" height="80" class="left">
-									<p class="title left"><?php echo $value['title']; ?><span><a href=""> 查看详情 ▽</a></span></p>
+									<p class="title left"><?php echo $value['title']; ?><span><a href="javascript:;" class="btn-yy-more"> 查看详情 ▽</a></span></p>
 								</td>
 								<td><?php echo $value['area']; ?>m<sup>2</sup></td>
 								<td><?=substr($value['bed'],0,9)?></td>
@@ -126,6 +126,35 @@
 								<td><span style="color:green"><?php echo $wifiCopy[$value['wifi']]; ?></span></td>
 								<td style="color: #ff9100;">¥<?php echo $value['price']; ?></td>
 								<td><a href="javascript:;" data-href="<?=url('order_index',array('catid'=>$catid,'id'=>$value['id']))?>" class="btn-yuding">预定</a></td>
+							</tr>
+							<tr class="yy-info">
+								<td colspan="7">
+									<?php if($value['album']){ ?>
+									<div class="img">
+										<label class="btn-img-left"></label>
+										<div class="yy-container">
+											<ul>
+											<?php if($value['album']){ foreach($value['album'] as $k => $v){ ?>
+												<li><img src="<?php echo $v['url']; ?>" width="160" height="100"></li>
+											<?php }} ?>
+											<div class="clear"></div>
+											</ul>
+										</div>
+										<label class="btn-img-right"></label>
+									</div>
+									<div class="clear"></div>
+									<?php } ?>
+									<div class="yy-des">
+										<ul>
+											<li><span>建筑面积：</span><?php echo $value['area']; ?>平方米</li>
+											<li><span>楼层：</span><?php echo $value['floor']; ?>楼</li>
+											<li><span>床型：</span><?php echo $value['bed']; ?></li>
+											<li><span>无烟房：</span>可安排无烟楼层</li>
+										</ul>
+										<div class="clear"></div>
+										<p><span>便利设施：</span><?php echo $value['description']; ?></p>
+									</div>
+								</td>
 							</tr>
 							<?php }} ?>
 						</table>

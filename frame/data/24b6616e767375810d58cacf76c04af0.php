@@ -114,15 +114,15 @@
                             </ul>
                             <ul class="bank">
                                 <li>
-                                    <a href="javascript:;" class="J_payment" data-payment="alipay">
+                                    <a href="<?=url('cashier',array('order_sn'=>$orderSn,'type'=>'alipay'))?>" class="J_payment" data-payment="alipay">
                                         <img src="http://static.chayu.com/images/mall/online_payment/pt_bank1.png" alt="">
                                     </a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="javascript:;" class="J_payment" data-payment="weixin">
                                         <img src="http://static.chayu.com/images/mall/online_payment/pt_bank2.png" alt="">
                                     </a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                         

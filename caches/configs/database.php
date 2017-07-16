@@ -1,7 +1,7 @@
 <?php
 return array(
     'default' => array(
-        'hostname'    => 'localhost',
+        'hostname'    => '127.0.0.1',
         'port'        => 3306,
         'database'    => 'yy',
         'username'    => 'root',
