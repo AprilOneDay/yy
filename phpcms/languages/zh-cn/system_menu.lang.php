@@ -460,4 +460,11 @@ $LANG['dd'] = '订单管理';
 $LANG['dd'] = '订单管理';
 $LANG['bf'] = '病房预约';
 $LANG['bf'] = '挂号预约';
+$LANG['dd'] = '挂号预约';
+$LANG['dd'] = '订单管理';
+$LANG['dd'] = '挂号预约';
+$LANG['ddgl'] = '订单管理';
+$LANG['bf'] = '病房预约';
+$LANG['ghyy'] = '挂号预约';
+$LANG['console'] = '医院管理';
 ?>
